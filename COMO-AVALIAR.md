@@ -79,7 +79,7 @@ Reset: botão **“Resetar dados do cenário”** ou limpar o `localStorage` (ch
 
 ```bash
 npx playwright install chromium
-npm run test:e2e        # 30 testes (22 de fluxo + 8 visuais)
+npm run test:e2e        # 42 testes (34 de fluxo + 8 visuais)
 npm run test:e2e:ui
 npx playwright show-report
 ```
@@ -113,7 +113,7 @@ Metas: Performance ≥ 90 · Acessibilidade ≥ 95 · Boas práticas ≥ 95 · S
 
 O enunciado exige **URL pública** (§12) e o formulário de entrega marca o campo
 “Link da aplicação” como obrigatório. O guia de deploy (opções gratuitas) está em
-`CONTEXTO.md` §11.1; a configuração do Netlify está em `netlify.toml`.
+README §8; a configuração do Netlify está em `netlify.toml`.
 
 Checklist do ambiente publicado:
 

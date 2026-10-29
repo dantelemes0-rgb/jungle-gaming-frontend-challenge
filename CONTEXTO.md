@@ -13,9 +13,9 @@
 | Produto | **GreenMint** — marketplace de NFTs (desafio técnico da Jungle Gaming) |
 | Repositório | https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge (**público**) |
 | Branch principal | `main` (2 commits) |
-| Caminho local | `C:\Users\dante\OneDrive\Desktop\JungleGaming\app` |
+| Caminho local | workspace do candidato |
 | Stack | React 19 · TypeScript 5.9 · Vite 7 · TanStack Router/Query · Axios · Tailwind 4 · shadcn/ui · MSW 2.15 · socket.io-client · Playwright · Lighthouse |
-| Estado | App completa e funcional; **30/30 testes E2E verdes** |
+| Estado | App completa e funcional; **42/42 testes E2E verdes** |
 | Pendente | Lighthouse (pausado a pedido do candidato) |
 | Prazo | entrega em **29/10/2026** |
 
@@ -194,7 +194,7 @@ Detalhes e histórico em `ARCHITECTURE.md`.
 |---|---|
 | Desktop (fluxos) | 22/22 ✅ |
 | Visual (desktop + mobile) | 8/8 ✅ |
-| **Total** | **30/30 ✅** |
+| **Total** | **42/42 ✅** |
 
 Specs: `catalog`, `detail`, `auth`, `favorites`, `cart`, `purchase`, `checkout-failures`, `realtime`, `account`, `a11y`, `loading`, `visual`.
 
@@ -321,38 +321,3 @@ worktrees/qa                    feat/qa
 - Worktrees são cópias do mesmo commit; servem para trabalho paralelo por agentes.
 
 ---
-
-## 13. Prompt sugerido para o próximo agente
-
-```text
-Você assume a entrega do GreenMint (desafio Frontend Jungle Gaming).
-Leia, nesta ordem: CONTEXTO.md (este arquivo), ARCHITECTURE.md e README.md.
-Repositório: https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge
-
-Regras: Figma somente leitura; nenhum push no GitHub da Jungle; sem dados reais;
-documentação em português; nenhuma ação externa (deploy/formulário) sem autorização.
-
-Estado: app completa, 30/30 testes E2E verdes. Falta: deploy gratuito (Netlify Drop
-ou GitHub Pages), Lighthouse e guia HTML de estudo.
-
-Prioridade agora:
-1. validar o build e rodar a suíte E2E do zero;
-2. publicar em opção gratuita (sem Vercel) e validar deep link + mocks + socket;
-3. rodar Lighthouse 3x por página/perfil e registrar medianas;
-4. gerar docs/guia-de-estudo.html.
-
-Não altere as decisões da seção 7 sem registrar novo ADR.
-```
-
----
-
-## 14. Contatos e artefatos externos
-
-| Item | Onde |
-|---|---|
-| Enunciado original | `..\frontend-challenge\README.md` |
-| Formulário de entrega | https://entrevistas.45-55-130-35.sslip.io/testes/front-remoto |
-| Campos do formulário | e-mail da candidatura, link do repositório, link da aplicação, observações |
-| Figma | `Ff0SksUi7UFtPWUO8kyNtw` (viewer) |
-| Conta GitHub | `dantelemes0-rgb` |
-| Conta Vercel | **não possui** |
