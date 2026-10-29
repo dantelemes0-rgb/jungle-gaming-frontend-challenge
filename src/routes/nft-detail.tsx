@@ -52,14 +52,26 @@ function NftDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="container-page grid gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr]">
-        <Skeleton className="aspect-square w-full rounded-[var(--radius-card)]" />
-        <div className="space-y-4">
-          <Skeleton className="h-4 w-32" />
-          <Skeleton className="h-10 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-12 w-full" />
+      <div className="container-page py-10">
+        <div className="mb-6">
+          <Skeleton className="h-5 w-64" />
+        </div>
+        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <Skeleton className="aspect-square w-full rounded-[var(--radius-card)]" />
+            <div className="mt-3 flex gap-3">
+              {[0, 1, 2].map((item) => (
+                <Skeleton key={item} className="size-20 rounded-xl" />
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4">
+            <Skeleton className="h-6 w-40" />
+            <Skeleton className="h-10 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-40 w-full rounded-[var(--radius-card)]" />
+            <Skeleton className="h-24 w-full" />
+          </div>
         </div>
       </div>
     )

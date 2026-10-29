@@ -6,6 +6,7 @@ import { catalogSearchSchema, type CatalogSearch } from '@/shared/api/contracts'
 import { NftCard } from '@/shared/components/nft-card'
 import { EmptyState, ErrorState, NftGridSkeleton } from '@/shared/components/states'
 import { Button } from '@/shared/ui/button'
+import { Skeleton } from '@/shared/ui/skeleton'
 import { rootRoute } from './root'
 
 export const homeRoute = createRoute({
@@ -78,22 +79,29 @@ function HomePage() {
 
           <div className="relative">
             <div className="grid grid-cols-2 gap-3">
-              {(featured.data?.items ?? []).slice(0, 4).map((nft, index) => (
-                <div
-                  key={nft.id}
-                  className={index % 2 === 1 ? 'translate-y-6' : undefined}
-                >
-                  <img
-                    src={nft.imageUrl}
-                    alt={`Arte de ${nft.name}`}
-                    width={640}
-                    height={640}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                    className="aspect-square w-full rounded-[var(--radius-card)] border border-border object-cover"
-                  />
-                </div>
-              ))}
+              {[0, 1, 2, 3].map((index) => {
+                const nft = featured.data?.items[index]
+                return (
+                  <div
+                    key={nft?.id ?? `hero-slot-${index}`}
+                    className={index % 2 === 1 ? 'translate-y-6' : undefined}
+                  >
+                    {nft ? (
+                      <img
+                        src={nft.imageUrl}
+                        alt={`Arte de ${nft.name}`}
+                        width={640}
+                        height={640}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        fetchPriority={index === 0 ? 'high' : 'auto'}
+                        className="aspect-square w-full rounded-[var(--radius-card)] border border-border object-cover"
+                      />
+                    ) : (
+                      <Skeleton className="aspect-square w-full rounded-[var(--radius-card)]" />
+                    )}
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

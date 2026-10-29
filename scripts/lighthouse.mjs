@@ -55,6 +55,7 @@ try {
   for (const profile of PROFILES) {
     for (const page of PAGES) {
       const scores = Object.fromEntries(CATEGORIES.map((key) => [key, []]))
+      const metrics = { lcp: [], cls: [], tbt: [] }
 
       for (let run = 1; run <= RUNS; run += 1) {
         const options = {
@@ -86,6 +87,10 @@ try {
           if (score != null) scores[key].push(Math.round(score * 100))
         }
 
+        metrics.lcp.push(result.lhr.audits['largest-contentful-paint']?.numericValue ?? 0)
+        metrics.cls.push(result.lhr.audits['cumulative-layout-shift']?.numericValue ?? 0)
+        metrics.tbt.push(result.lhr.audits['total-blocking-time']?.numericValue ?? 0)
+
         const metrics = result.lhr.audits
         console.log(
           `${profile}/${page.name} #${run}: ` +
@@ -94,22 +99,30 @@ try {
         )
       }
 
+      const medianOf = (values) => {
+        const sorted = [...values].sort((a, b) => a - b)
+        return sorted[Math.floor(sorted.length / 2)] ?? 0
+      }
       const median = Object.fromEntries(
-        Object.entries(scores).map(([key, values]) => {
-          const sorted = [...values].sort((a, b) => a - b)
-          return [key, sorted[Math.floor(sorted.length / 2)] ?? 0]
-        }),
+        Object.entries(scores).map(([key, values]) => [key, medianOf(values)]),
       )
-      rows.push({ profile, page: page.name, median })
+      rows.push({
+        profile,
+        page: page.name,
+        median,
+        lcp: (medianOf(metrics.lcp) / 1000).toFixed(1),
+        cls: medianOf(metrics.cls).toFixed(3),
+        tbt: Math.round(medianOf(metrics.tbt)),
+      })
     }
   }
 
   const header =
-    '| Perfil | Página | Performance | Acessibilidade | Boas práticas | SEO |\n|---|---|---:|---:|---:|---:|'
+    '| Perfil | Página | Performance | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |\n|---|---|---:|---:|---:|---:|---:|---:|---:|'
   const body = rows
     .map(
       (row) =>
-        `| ${row.profile} | ${row.page} | ${row.median.performance} | ${row.median.accessibility} | ${row.median['best-practices']} | ${row.median.seo} |`,
+        `| ${row.profile} | ${row.page} | ${row.median.performance} | ${row.median.accessibility} | ${row.median['best-practices']} | ${row.median.seo} | ${row.lcp} s | ${row.cls} | ${row.tbt} ms |`,
     )
     .join('\n')
 

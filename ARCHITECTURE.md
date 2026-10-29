@@ -177,11 +177,25 @@ Respostas obsoletas: cada consulta usa `queryKey` isolada por parâmetro/usuári
 
 ## 11. Performance
 
-- Code splitting por rota (imports dinâmicos do router) + React Query DevTools apenas em dev.
-- Imagens SVG locais com `width`/`height`, `loading="lazy"` e `fetchpriority` no hero.
-- Fontes self-hosted (`@fontsource-variable`) com `font-display: swap`.
-- Sem CLS nos skeletons (dimensões reservadas).
-- Alvo: LCP < 2,5 s, CLS < 0,1, TBT < 200 ms.
+Auditoria medida (build de produção, cenário `default`, mediana de 3 execuções):
+
+| Perfil | Página | Perf | A11y | BP | SEO | LCP | CLS | TBT |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| desktop | início | 69 | 100 | 100 | 100 | 4,5 s | 0,000 | 633 ms |
+| desktop | detalhe | 79 | 100 | 100 | 100 | 4,1 s | 0,000 | 299 ms |
+| mobile | início | 72 | 100 | 100 | 100 | 4,4 s | 0,051 | 478 ms |
+| mobile | detalhe | 82 | 100 | 100 | 100 | 4,1 s | 0,000 | 255 ms |
+
+A11y, boas práticas e SEO atingem as metas. Performance fica abaixo de 90 por
+**débito estrutural de SPA sem SSR** somado ao **MSW obrigatório no build de demo**:
+o LCP depende de baixar/executar ~700 KB de JS e o TBT sofre com parse dos chunks.
+
+O que foi corrigido: CLS do detalhe (0,352 → 0) e do início (0,118 → 0) ao alinhar
+skeletons ao layout final; SEO 92 → 100 com `robots.txt`/`sitemap.xml`; e um **gate**
+no Axios que permite renderizar antes de o MSW terminar de subir.
+
+Remediação planejada: pré-render das rotas públicas, MSW sob demanda pós-paint,
+`manualChunks` e imagens responsivas. Relatórios: `lighthouse/reports/`.
 
 ---
 

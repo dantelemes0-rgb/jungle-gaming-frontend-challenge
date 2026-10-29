@@ -17,9 +17,13 @@ test-results
 playwright-report
 blob-report
 playwright/.cache
-lighthouse/reports/*.html
-lighthouse/reports/*.json
 coverage
+
+# Lighthouse: versiona o resumo e a mediana (run 2); demais execuções ficam locais
+lighthouse/reports/*
+!lighthouse/reports/summary.md
+!lighthouse/reports/*-2.html
+!lighthouse/reports/*-2.json
 
 # Editor
 .vscode/*

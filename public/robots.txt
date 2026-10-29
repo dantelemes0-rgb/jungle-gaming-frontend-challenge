@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://greenmint-marketplace-app.jungle-marketplace.workers.dev/sitemap.xml

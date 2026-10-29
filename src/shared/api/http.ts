@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { toApiError } from './errors'
+import { waitForMocks } from './mock-gate'
 
 export const TOKEN_KEY = 'jg.token'
 
@@ -38,7 +39,8 @@ export const http = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
-http.interceptors.request.use((config) => {
+http.interceptors.request.use(async (config) => {
+  await waitForMocks()
   const token = getToken()
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
