@@ -151,18 +151,24 @@ Decisões, cache, sessão e limitações: [`ARCHITECTURE.md`](./ARCHITECTURE.md)
 
 ---
 
-## 8. Deploy (gratuito, sem Vercel)
+## 8. Deploy (Cloudflare Pages)
 
-O projeto é uma SPA estática. O `netlify.toml` já configura build, SPA fallback e cache.
+O projeto é uma SPA estática. Os arquivos `public/_redirects` (fallback SPA) e
+`public/_headers` (segurança e cache) são copiados para `dist/` e funcionam no
+Cloudflare Pages e no Netlify.
 
-**Netlify Drop (recomendado — sem CLI):**
+**Cloudflare Pages (via Wrangler):**
 
 ```bash
 npm run build
-# arraste a pasta dist/ em https://app.netlify.com/drop
+npx wrangler pages project create greenmint --production-branch=main
+npx wrangler pages deploy dist --project-name=greenmint --branch=main
 ```
 
-**Netlify via Git:** conecte o repositório; build `npm run build`, publish `dist`.
+Variáveis: `CLOUDFLARE_API_TOKEN` (token com permissão *Cloudflare Pages: Edit*) e
+`CLOUDFLARE_ACCOUNT_ID`.
+
+**Netlify (alternativa):** arraste `dist/` em https://app.netlify.com/drop.
 
 **GitHub Pages (alternativa):** exige `base` relativo ao nome do repositório, `serviceWorker.url` com `import.meta.env.BASE_URL`, `basepath` no router e cópia de `index.html` para `404.html`. Passo a passo em `CONTEXTO.md` §11.1.
 
