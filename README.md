@@ -1,6 +1,6 @@
 # Kurio — NFT Marketplace
 
-**Demo publicada:** https://greenmint-marketplace-app.jungle-marketplace.workers.dev
+**Demo publicada:** https://kurio.jungle-marketplace.workers.dev
 **Repositório:** https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge
 
 Desafio técnico Frontend da **Jungle Gaming**: marketplace de NFTs com React + TypeScript, APIs simuladas com MSW, tempo real com Socket.IO, testes E2E com Playwright e auditoria com Lighthouse.
@@ -158,7 +158,7 @@ Decisões, cache, sessão e limitações: [`ARCHITECTURE.md`](./ARCHITECTURE.md)
 
 Publicado em **Cloudflare Workers + Static Assets** (SPA nativa, todas as rotas com status 200):
 
-- Produção: **https://greenmint-marketplace-app.jungle-marketplace.workers.dev**
+- Produção: **https://kurio.jungle-marketplace.workers.dev**
 
 ```bash
 npm run build

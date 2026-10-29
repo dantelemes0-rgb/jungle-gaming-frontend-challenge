@@ -1,6 +1,6 @@
 # Lighthouse — mediana de 3 execuções
 
-Ambiente: https://greenmint-marketplace-app.jungle-marketplace.workers.dev · win32 · Node v24.19.0 · Chrome headless
+Ambiente: https://kurio.jungle-marketplace.workers.dev · win32 · Node v24.19.0 · Chrome headless
 Build: `npm run build` · Cenário: `default`
 
 | Perfil | Página | Performance | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |

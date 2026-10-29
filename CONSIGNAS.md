@@ -39,7 +39,7 @@ Trecho literal do enunciado (§12):
 |---|---|---|
 | E-mail da candidatura | Sim | (e-mail usado no processo) |
 | Link do repositório | Sim | `https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge` |
-| Link da aplicação | **Sim** | https://greenmint-marketplace-app.jungle-marketplace.workers.dev (Cloudflare) |
+| Link da aplicação | **Sim** | https://kurio.jungle-marketplace.workers.dev (Cloudflare) |
 | Observações | Não | opcional |
 
 Formulário: https://entrevistas.45-55-130-35.sslip.io/testes/front-remoto
