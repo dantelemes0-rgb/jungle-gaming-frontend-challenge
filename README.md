@@ -124,6 +124,9 @@ npm run audit:lighthouse  # auditoria (build + preview)
 
 Relatórios: `playwright-report/` (HTML) e `test-results/` (traces em falha).
 
+> **Baselines visuais** foram geradas em Windows (`*-win32.png`). Em CI Linux, rode
+> `npx playwright test e2e/visual.spec.ts --update-snapshots` para gerar as baselines do runner.
+
 ---
 
 ## 7. Estrutura
