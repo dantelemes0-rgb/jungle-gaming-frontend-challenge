@@ -60,9 +60,29 @@ export function RegisterPage() {
     (register.error as { status: number }).status === 409
 
   return (
-    <div className="bg-black/20">
-      <div className="container-page flex max-w-md flex-col py-12">
-        <div className="rounded-[var(--radius-card)] border border-border bg-surface p-6 shadow-[var(--shadow-pop)] sm:p-8">
+    <div className="container-page grid min-h-[calc(100dvh-4rem)] items-center gap-12 py-10 lg:grid-cols-[1.05fr_0.95fr]">
+      <aside className="hidden flex-col gap-5 lg:flex">
+        <p className="text-xs font-medium tracking-[0.18em] text-text-muted uppercase">
+          Bem-vindo à Kurio
+        </p>
+        <h2 className="font-display text-4xl leading-[1.08] font-bold uppercase">
+          Sua coleção começa aqui
+        </h2>
+        <p className="max-w-md text-sm leading-relaxed text-text-muted">
+          Descubra NFTs selecionados de criadores emergentes e consagrados. Colecione arte
+          digital e faça parte do novo futuro da cultura.
+        </p>
+        <img
+          src="/assets/nfts/nft-06.svg"
+          alt=""
+          width={640}
+          height={640}
+          className="aspect-square w-full max-w-md rounded-[var(--radius-card)] border border-border object-cover"
+        />
+      </aside>
+
+      <div className="w-full max-w-md justify-self-center">
+        <div className="rounded-[var(--radius-card)] border border-border bg-surface p-6 shadow-[var(--shadow-pop)] sm:p-10">
           <div className="mb-6 flex gap-6 border-b border-border text-sm">
             <Link
               to="/login"

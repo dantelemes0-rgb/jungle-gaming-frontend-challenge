@@ -154,7 +154,7 @@ function NftDetailPage() {
             ))}
           </div>
 
-          <div className="overflow-hidden rounded-[var(--radius-image)] border border-border bg-surface">
+          <div className="aspect-square overflow-hidden rounded-[var(--radius-image)] border border-border bg-surface">
             <img
               src={nft.imageUrl}
               alt={`Arte de ${nft.name}`}
@@ -162,7 +162,7 @@ function NftDetailPage() {
               height={1200}
               fetchPriority="high"
               className={cn(
-                'aspect-square w-full object-cover transition-transform duration-300',
+                'size-full object-cover transition-transform duration-300',
                 zoom === 1 && 'scale-125',
                 zoom === 2 && 'scale-150',
               )}
