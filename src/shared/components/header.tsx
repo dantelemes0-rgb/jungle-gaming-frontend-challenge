@@ -1,5 +1,5 @@
-import { Link, useNavigate } from '@tanstack/react-router'
-import { Leaf, LogOut, Menu, ShoppingBag, User, Wallet } from 'lucide-react'
+﻿import { Link, useNavigate } from '@tanstack/react-router'
+import { LogOut, Menu, ShoppingBag, User, Wallet } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/shared/lib/cn'
 import { initials } from '@/shared/lib/format'
@@ -41,16 +41,16 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-bg/85 backdrop-blur-md">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2" aria-label="GreenMint — início">
-            <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-contrast">
-              <Leaf className="size-5" aria-hidden="true" />
+          <Link to="/" className="flex items-center gap-2" aria-label="Kurio â€” inÃ­cio">
+            <span className="grid size-9 place-items-center rounded-full bg-accent font-display text-base font-bold text-accent-contrast">
+              K
             </span>
-            <span className="font-display text-lg font-semibold tracking-tight">
-              GreenMint
+            <span className="font-display text-lg font-semibold tracking-[0.18em]">
+              KURIO
             </span>
           </Link>
 
-          <nav aria-label="Navegação principal" className="hidden items-center gap-1 md:flex">
+          <nav aria-label="NavegaÃ§Ã£o principal" className="hidden items-center gap-1 md:flex">
             <Link
               to="/"
               className="rounded-md px-3 py-2 text-sm text-text-muted transition-colors hover:text-text"
@@ -154,7 +154,7 @@ export function Header() {
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
-          <nav aria-label="Navegação mobile" className="flex flex-col gap-1 p-4">
+          <nav aria-label="NavegaÃ§Ã£o mobile" className="flex flex-col gap-1 p-4">
             {MOBILE_NAV.map((item) => (
               <button
                 key={item.to}
@@ -198,3 +198,4 @@ export function Header() {
     </header>
   )
 }
+

@@ -23,12 +23,12 @@ function mulberry32(seed) {
 }
 
 const PALETTES = [
-  ['#c8f45c', '#2f8f6b', '#0d1f16'],
-  ['#9be7c4', '#2c6e49', '#0b1410'],
-  ['#f4e285', '#c46a2f', '#1a120b'],
-  ['#8ecae6', '#23607a', '#0a1418'],
-  ['#f0a6ca', '#7a2f5c', '#170b12'],
-  ['#c3b1f5', '#4b3a8f', '#100d1a'],
+  ['#d28a4c', '#7a3e1d', '#1a0f0b'],
+  ['#e89b55', '#8c4a22', '#1e120c'],
+  ['#c9a66b', '#6b4a2a', '#17100c'],
+  ['#e0b080', '#7a4b2a', '#1a120d'],
+  ['#b46a3a', '#5e2f18', '#160d09'],
+  ['#d9c3a5', '#7c5a3c', '#1b130e'],
 ]
 
 function nftSvg(index) {
@@ -73,7 +73,7 @@ function nftSvg(index) {
     <rect x="${(cx - 4).toFixed(1)}" y="${(cy - 160).toFixed(1)}" width="8" height="320" rx="4" fill="${accent}" opacity="0.3"/>
   </g>
   <circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="220" fill="${accent}" opacity="0.06" filter="url(#blur${index})"/>
-  <text x="48" y="596" font-family="monospace" font-size="20" fill="${accent}" opacity="0.7">GREENMINT · ${String(index).padStart(3, '0')}</text>
+  <text x="48" y="596" font-family="monospace" font-size="20" fill="${accent}" opacity="0.7">KURIO · ${String(index).padStart(3, '0')}</text>
 </svg>`
 }
 
@@ -106,7 +106,7 @@ for (let index = 1; index <= 4; index += 1) {
 
 writeFileSync(
   join(process.cwd(), 'public', 'favicon.svg'),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#0b0d0b"/><path d="M23 9c0 7-5 12-12 12 0-7 5-12 12-12Z" fill="#c8f45c"/><path d="M9 23c2-5 5-8 10-10" stroke="#0b0d0b" stroke-width="2" fill="none"/></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#140d0a"/><text x="16" y="23" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="700" fill="#d28a4c">K</text></svg>`,
 )
 
 console.log('Arte gerada: 24 NFTs, 4 avatares, favicon.')

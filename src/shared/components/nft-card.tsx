@@ -4,16 +4,8 @@ import { useState } from 'react'
 import type { Nft } from '@/shared/api/contracts'
 import { cn } from '@/shared/lib/cn'
 import { formatEthWithSymbol } from '@/shared/lib/money'
-import { Badge } from '@/shared/ui/badge'
 import { useCurrentUser } from '@/features/auth/hooks'
 import { useFavorites, useToggleFavorite } from '@/features/favorites/hooks'
-
-const rarityLabel: Record<Nft['rarity'], string> = {
-  common: 'Comum',
-  rare: 'Rara',
-  epic: 'Épica',
-  legendary: 'Lendária',
-}
 
 export function NftCard({ nft, priority = false }: { nft: Nft; priority?: boolean }) {
   const user = useCurrentUser()
@@ -36,7 +28,7 @@ export function NftCard({ nft, priority = false }: { nft: Nft; priority?: boolea
   }
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface transition-colors hover:border-border-strong">
+    <article className="group relative flex flex-col overflow-hidden rounded-[var(--radius-image)] border border-border bg-surface transition-colors hover:border-border-strong">
       <div className="relative aspect-square overflow-hidden bg-surface-2">
         <Link
           to="/nft/$nftId"
@@ -83,26 +75,21 @@ export function NftCard({ nft, priority = false }: { nft: Nft; priority?: boolea
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <Link
-              to="/nft/$nftId"
-              params={{ nftId: nft.id }}
-              className="block truncate font-display text-base font-semibold text-text hover:text-accent"
-            >
-              {nft.name}
-            </Link>
-            <p className="truncate text-xs text-text-muted">{nft.collection.name}</p>
-          </div>
-          <Badge variant={nft.rarity === 'legendary' ? 'accent' : 'default'}>
-            {rarityLabel[nft.rarity]}
-          </Badge>
+        <div className="min-w-0">
+          <Link
+            to="/nft/$nftId"
+            params={{ nftId: nft.id }}
+            className="block truncate text-base text-text hover:text-accent"
+          >
+            {nft.name}
+          </Link>
+          <p className="truncate text-xs text-text-muted">{nft.collection.name}</p>
         </div>
 
         <div className="mt-auto flex items-end justify-between gap-2">
           <div>
             <p className="text-[11px] tracking-wide text-text-muted uppercase">Preço</p>
-            <p className="font-display text-lg font-semibold text-text">
+            <p className="text-lg font-bold text-accent">
               {formatEthWithSymbol(nft.priceEth)}
             </p>
           </div>

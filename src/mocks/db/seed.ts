@@ -54,7 +54,7 @@ function buildNfts(): Nft[] {
         .replace(/[\u0300-\u036f]/g, ''),
       name: `${PREFIXES[index % PREFIXES.length]} ${SUFFIXES[index % SUFFIXES.length]} #${seed}`,
       description:
-        'Edição digital original da coleção GreenMint. Cada peça existe em número limitado e é verificável on-chain (simulado).',
+        'Edição digital original da coleção Kurio. Cada peça existe em número limitado e é verificável on-chain (simulado).',
       imageUrl: `/assets/nfts/nft-${String(seed).padStart(2, '0')}.svg`,
       collection,
       creator,

@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="mt-20 border-t border-border">
       <div className="container-page flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="font-display text-base font-semibold">GreenMint</p>
+          <p className="font-display text-base font-semibold">Kurio</p>
           <p className="mt-1 max-w-md text-xs text-text-muted">
             Marketplace demonstrativo. NFTs, carteiras, pagamentos e transações são
             simulados — nenhum ativo digital real é negociado.
@@ -22,7 +22,7 @@ export function Footer() {
             Perfil
           </Link>
         </nav>
-        <p className="text-xs text-text-muted">© 2026 GreenMint · dados fictícios</p>
+        <p className="text-xs text-text-muted">© 2026 Kurio · dados fictícios</p>
       </div>
     </footer>
   )

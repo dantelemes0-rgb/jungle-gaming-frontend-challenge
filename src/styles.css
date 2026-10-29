@@ -6,23 +6,24 @@
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, sans-serif;
 
-  --color-bg: #0b0d0b;
-  --color-surface: #121512;
-  --color-surface-2: #191d18;
-  --color-surface-3: #222722;
-  --color-border: #2b312a;
-  --color-border-strong: #3b4338;
-  --color-text: #f1f5ec;
-  --color-text-muted: #9ba797;
-  --color-accent: #c8f45c;
-  --color-accent-hover: #d7ff77;
-  --color-accent-contrast: #0b0d0b;
-  --color-success: #4ade80;
-  --color-danger: #f87171;
-  --color-warning: #fbbf24;
+  --color-bg: #140d0a;
+  --color-surface: #1e1512;
+  --color-surface-2: #271b17;
+  --color-surface-3: #33241e;
+  --color-border: #3a2a24;
+  --color-border-strong: #4e382e;
+  --color-text: #f5f1eb;
+  --color-text-muted: #a89a8c;
+  --color-accent: #d28a4c;
+  --color-accent-hover: #e09a5a;
+  --color-accent-contrast: #140d0a;
+  --color-success: #8fc79a;
+  --color-danger: #e07a6a;
+  --color-warning: #e8b85a;
 
   --radius-card: 1rem;
-  --radius-control: 0.625rem;
+  --radius-image: 0.9375rem;
+  --radius-control: 0.375rem;
 
   --shadow-card: 0 18px 40px -24px rgb(0 0 0 / 0.9);
   --shadow-pop: 0 24px 60px -20px rgb(0 0 0 / 0.95);
@@ -52,7 +53,7 @@
   body {
     margin: 0;
     min-height: 100dvh;
-    background: radial-gradient(1200px 600px at 80% -10%, #17210f 0%, transparent 60%),
+    background: radial-gradient(1200px 600px at 80% -10%, #2a1a12 0%, transparent 60%),
       var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-sans);

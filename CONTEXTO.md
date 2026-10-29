@@ -1,4 +1,4 @@
-# CONTEXTO — GreenMint (Jungle Gaming Frontend Challenge)
+# CONTEXTO — Kurio (Jungle Gaming Frontend Challenge)
 
 > **Para o próximo agente:** leia este arquivo inteiro antes de agir. Ele descreve o que existe, como rodar, o que já foi validado, o que falta e quais regras não podem ser quebradas.
 > Última atualização: **2026-10-29, 04:50** (horário local).
@@ -10,7 +10,7 @@
 
 | Item | Valor |
 |---|---|
-| Produto | **GreenMint** — marketplace de NFTs (desafio técnico da Jungle Gaming) |
+| Produto | **Kurio** — marketplace de NFTs (desafio técnico da Jungle Gaming) |
 | Repositório | https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge (**público**) |
 | Branch principal | `main` (2 commits) |
 | Caminho local | workspace do candidato |

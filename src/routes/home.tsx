@@ -1,5 +1,5 @@
 import { createRoute, Link, useNavigate, useSearch } from '@tanstack/react-router'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useEffect } from 'react'
 import { useCatalog } from '@/features/catalog/hooks'
 import { CatalogFilters, CatalogToolbar, Pagination } from '@/features/catalog/filter-bar'
@@ -49,75 +49,47 @@ function HomePage() {
 
   return (
     <>
-      <section className="border-b border-border">
-        <div className="container-page grid gap-10 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:py-24">
+      <section className="container-page pt-8">
+        <div className="grid gap-6 rounded-[var(--radius-card)] border border-border bg-surface p-6 lg:grid-cols-[1fr_450px] lg:items-center lg:p-10">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
-              <Sparkles className="size-3.5" aria-hidden="true" />
-              Coleção GreenMint · edições limitadas
-            </span>
-            <h1 className="mt-5 font-display text-4xl leading-[1.05] font-semibold sm:text-5xl lg:text-6xl">
-              Descubra, colecione e negocie arte digital.
-            </h1>
-            <p className="mt-5 max-w-xl text-base text-text-muted">
-              Um marketplace para edições verificáveis de artistas independentes. Explore
-              coleções, monte seu carrinho e finalize com carteira simulada.
+            <p className="text-xs font-medium tracking-[0.18em] text-text-muted uppercase">
+              Bem-vindo à Kurio
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
+            <h1 className="mt-4 font-display text-4xl leading-[1.08] font-bold uppercase sm:text-5xl lg:text-[43px]">
+              Seja dono do futuro da arte digital
+            </h1>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-text-muted">
+              Descubra NFTs selecionados de criadores emergentes e consagrados. Colecione
+              arte digital, apoie artistas e faça parte do novo futuro da cultura.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild>
                 <a href="#catalogo">
-                  Explorar catálogo
+                  Explorar
                   <ArrowRight aria-hidden="true" />
                 </a>
               </Button>
-              <Button asChild variant="secondary" size="lg">
+              <Button asChild variant="ghost">
                 <Link to="/register" search={{ redirect: undefined }}>
                   Criar conta
                 </Link>
               </Button>
             </div>
-            <dl className="mt-10 grid max-w-md grid-cols-3 gap-6">
-              {[
-                { label: 'Edições', value: `${catalog.data?.total ?? '—'}` },
-                { label: 'Coleções', value: '4' },
-                { label: 'Taxa de rede', value: '0,0025' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dt className="text-xs tracking-wide text-text-muted uppercase">
-                    {stat.label}
-                  </dt>
-                  <dd className="font-display text-xl font-semibold">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           <div className="relative">
-            <div className="grid grid-cols-2 gap-3">
-              {[0, 1, 2, 3].map((index) => {
-                const nft = featured.data?.items[index]
-                return (
-                  <div
-                    key={nft?.id ?? `hero-slot-${index}`}
-                    className={index % 2 === 1 ? 'translate-y-6' : undefined}
-                  >
-                    {nft ? (
-                      <img
-                        src={nft.imageUrl}
-                        alt={`Arte de ${nft.name}`}
-                        width={640}
-                        height={640}
-                        loading={index === 0 ? 'eager' : 'lazy'}
-                        fetchPriority={index === 0 ? 'high' : 'auto'}
-                        className="aspect-square w-full rounded-[var(--radius-card)] border border-border object-cover"
-                      />
-                    ) : (
-                      <Skeleton className="aspect-square w-full rounded-[var(--radius-card)]" />
-                    )}
-                  </div>
-                )
-              })}
-            </div>
+            {featured.data?.items[0] ? (
+              <img
+                src={featured.data.items[0].imageUrl}
+                alt={`Arte de ${featured.data.items[0].name}`}
+                width={450}
+                height={450}
+                fetchPriority="high"
+                className="aspect-square w-full rounded-[var(--radius-image)] border border-border object-cover"
+              />
+            ) : (
+              <Skeleton className="aspect-square w-full rounded-[var(--radius-image)]" />
+            )}
           </div>
         </div>
       </section>

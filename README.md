@@ -1,4 +1,4 @@
-# GreenMint — NFT Marketplace
+# Kurio — NFT Marketplace
 
 **Demo publicada:** https://greenmint-marketplace-app.jungle-marketplace.workers.dev
 **Repositório:** https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge

@@ -1,28 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" role="img" aria-label="Arte generativa 1">
   <defs>
     <radialGradient id="g1" cx="50%" cy="45%" r="70%">
-      <stop offset="0%" stop-color="#2c6e49" stop-opacity="0.95"/>
-      <stop offset="55%" stop-color="#0b1410" stop-opacity="1"/>
+      <stop offset="0%" stop-color="#8c4a22" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#1e120c" stop-opacity="1"/>
       <stop offset="100%" stop-color="#070907"/>
     </radialGradient>
     <linearGradient id="l1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#9be7c4"/>
-      <stop offset="100%" stop-color="#2c6e49"/>
+      <stop offset="0%" stop-color="#e89b55"/>
+      <stop offset="100%" stop-color="#8c4a22"/>
     </linearGradient>
     <filter id="blur1"><feGaussianBlur stdDeviation="26"/></filter>
   </defs>
   <rect width="640" height="640" fill="url(#g1)"/>
-  <rect x="56.1" y="405.5" width="25.8" height="194.5" rx="8" fill="#9be7c4" opacity="0.07"/><rect x="169.7" y="322.0" width="23.7" height="278.0" rx="8" fill="#9be7c4" opacity="0.16"/><rect x="267.1" y="383.3" width="47.3" height="216.7" rx="8" fill="#9be7c4" opacity="0.12"/><rect x="386.7" y="354.5" width="35.7" height="245.5" rx="8" fill="#9be7c4" opacity="0.08"/><rect x="488.1" y="286.0" width="34.8" height="314.0" rx="8" fill="#9be7c4" opacity="0.09"/>
-  <g opacity="0.5" stroke="#9be7c4" stroke-width="1" fill="none">
+  <rect x="56.1" y="405.5" width="25.8" height="194.5" rx="8" fill="#e89b55" opacity="0.07"/><rect x="169.7" y="322.0" width="23.7" height="278.0" rx="8" fill="#e89b55" opacity="0.16"/><rect x="267.1" y="383.3" width="47.3" height="216.7" rx="8" fill="#e89b55" opacity="0.12"/><rect x="386.7" y="354.5" width="35.7" height="245.5" rx="8" fill="#e89b55" opacity="0.08"/><rect x="488.1" y="286.0" width="34.8" height="314.0" rx="8" fill="#e89b55" opacity="0.09"/>
+  <g opacity="0.5" stroke="#e89b55" stroke-width="1" fill="none">
     <circle cx="333.0" cy="299.8" r="215.3" opacity="0.25"/>
     <circle cx="333.0" cy="299.8" r="185.3" opacity="0.4"/>
   </g>
   <circle cx="333.0" cy="299.8" r="155.3" fill="url(#l1)" opacity="0.9"/>
   <circle cx="303.0" cy="259.8" r="122.4" fill="#070907" opacity="0.55"/>
   <g transform="rotate(134 333.0 299.8)" opacity="0.85">
-    <rect x="173.0" y="295.8" width="320" height="8" rx="4" fill="#9be7c4" opacity="0.5"/>
-    <rect x="329.0" y="139.8" width="8" height="320" rx="4" fill="#9be7c4" opacity="0.3"/>
+    <rect x="173.0" y="295.8" width="320" height="8" rx="4" fill="#e89b55" opacity="0.5"/>
+    <rect x="329.0" y="139.8" width="8" height="320" rx="4" fill="#e89b55" opacity="0.3"/>
   </g>
-  <circle cx="333.0" cy="299.8" r="220" fill="#9be7c4" opacity="0.06" filter="url(#blur1)"/>
-  <text x="48" y="596" font-family="monospace" font-size="20" fill="#9be7c4" opacity="0.7">GREENMINT · 001</text>
+  <circle cx="333.0" cy="299.8" r="220" fill="#e89b55" opacity="0.06" filter="url(#blur1)"/>
+  <text x="48" y="596" font-family="monospace" font-size="20" fill="#e89b55" opacity="0.7">KURIO · 001</text>
 </svg>

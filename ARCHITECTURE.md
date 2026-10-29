@@ -1,4 +1,4 @@
-# ARCHITECTURE — GreenMint
+# ARCHITECTURE — Kurio
 
 Documento de decisões técnicas, contratos, políticas de estado e limitações da entrega.
 
