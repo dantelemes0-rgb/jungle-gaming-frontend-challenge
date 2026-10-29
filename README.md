@@ -2,6 +2,9 @@
 
 Desafio técnico Frontend da **Jungle Gaming**: marketplace de NFTs com React + TypeScript, APIs simuladas com MSW, tempo real com Socket.IO, testes E2E com Playwright e auditoria com Lighthouse.
 
+> **Consignas do desafio (fonte de verdade): [`CONSIGNAS.md`](./CONSIGNAS.md).**
+> Contexto de handoff: [`CONTEXTO.md`](./CONTEXTO.md). Decisões: [`ARCHITECTURE.md`](./ARCHITECTURE.md).
+
 > **Tudo é simulado.** Não há blockchain, carteira real, pagamento real ou backend externo. O mock roda na camada de rede (MSW) e persiste em `localStorage`.
 
 ---

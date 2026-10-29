@@ -236,6 +236,10 @@ Baselines visuais foram geradas em **Windows** (`*-win32.png`). Em Linux/CI, reg
 
 ### 11.1 Deploy gratuito (obrigatório no enunciado)
 
+> **Atenção:** o enunciado **não exige Netlify**. Exige **URL pública**. Netlify está entre as
+> opções aceitas (junto de Vercel e Cloudflare Pages). GitHub Pages também atende, com ajustes.
+> Regra completa: `CONSIGNAS.md` §1 e §6.
+
 **Opção A — Netlify Drop (mais rápida, sem CLI, sem Vercel)**
 
 1. Rodar `npm run build` em `app/`.
