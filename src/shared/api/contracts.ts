@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+// Sem compilação JIT (new Function): a CSP (script-src 'self') bloqueia eval em produção.
+z.config({ jitless: true })
+
 /* -------------------------------------------------------------------------- */
 /* Primitivos                                                                  */
 /* -------------------------------------------------------------------------- */

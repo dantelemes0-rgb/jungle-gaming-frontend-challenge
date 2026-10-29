@@ -10,17 +10,15 @@ async function bootstrap() {
   const scenario = params.get('mock')
   if (scenario) localStorage.setItem('jg.mock.scenario', scenario)
 
+  // Baixa o app em paralelo com o MSW (evita cascata no carregamento inicial).
+  const appModules = Promise.all([import('./app/router'), import('./app/providers')])
+
   if (MOCKS_ENABLED) {
-    // O gate é registrado antes do render; o chunk do MSW sobe em paralelo
-    // e as chamadas HTTP esperam por ele (sem bloquear o primeiro paint).
-    const { setMocksGate } = await import('./shared/api/mock-gate')
-    setMocksGate(import('./mocks/browser').then((mocks) => mocks.startMocks()))
+    const { startMocks } = await import('./mocks/browser')
+    await startMocks()
   }
 
-  const [{ router }, { Providers }] = await Promise.all([
-    import('./app/router'),
-    import('./app/providers'),
-  ])
+  const [{ router }, { Providers }] = await appModules
 
   const container = document.getElementById('root')
   if (!container) throw new Error('Elemento #root não encontrado')

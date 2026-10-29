@@ -228,13 +228,15 @@ export function CatalogToolbar({
   onChange,
   onClear,
   total,
-}: FilterProps & { total: number }) {
+}: FilterProps & { total?: number }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="flex items-center gap-3">
-        <p className="text-sm text-text-muted" aria-live="polite">
-          {total} {total === 1 ? 'resultado' : 'resultados'}
-        </p>
+        {typeof total === 'number' ? (
+          <p className="text-sm text-text-muted" aria-live="polite">
+            {total} {total === 1 ? 'resultado' : 'resultados'}
+          </p>
+        ) : null}
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="secondary" size="sm" className="lg:hidden">

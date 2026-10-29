@@ -1,5 +1,6 @@
 import { createRoute, Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { useEffect } from 'react'
 import { useCatalog } from '@/features/catalog/hooks'
 import { CatalogFilters, CatalogToolbar, Pagination } from '@/features/catalog/filter-bar'
 import { catalogSearchSchema, type CatalogSearch } from '@/shared/api/contracts'
@@ -31,6 +32,20 @@ function HomePage() {
   }
 
   const page = search.page ?? 1
+
+  // Se a API ajustar a página (ex.: page=999 → última), reflete na URL.
+  // Ignora o placeholder da página anterior durante a troca de filtro/página.
+  useEffect(() => {
+    if (catalog.isPlaceholderData) return
+    const current = catalog.data?.page
+    if (current && search.page && current !== search.page) {
+      void navigate({
+        to: '/',
+        search: (previous) => ({ ...previous, page: current }),
+        replace: true,
+      })
+    }
+  }, [catalog.data?.page, catalog.isPlaceholderData, search.page, navigate])
 
   return (
     <>
@@ -107,7 +122,11 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="catalogo" className="container-page scroll-mt-20 py-12">
+      {/* content-visibility: o catálogo abaixo da dobra só é renderizado ao se aproximar da viewport (menos layout/paint no mobile). */}
+      <section
+        id="catalogo"
+        className="container-page scroll-mt-20 py-12 [contain-intrinsic-size:auto_1600px] [content-visibility:auto]"
+      >
         <div className="mb-8 flex flex-col gap-2">
           <h2 className="font-display text-2xl font-semibold">Catálogo</h2>
           <p className="text-sm text-text-muted">
@@ -128,7 +147,7 @@ function HomePage() {
                 search={search}
                 onChange={update}
                 onClear={clear}
-                total={catalog.data?.total ?? 0}
+                total={catalog.isError ? undefined : (catalog.data?.total ?? 0)}
               />
             </div>
 

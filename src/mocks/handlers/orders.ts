@@ -83,12 +83,14 @@ export const orderHandlers = [
     ).toString(16)
 
     // Replay idempotente: mesma chave + mesmo conteúdo → mesmo pedido.
-    const replay = db.idempotency[idempotencyKey]
+    // O registro é escopado pelo usuário: uma chave nunca devolve pedido de outra conta.
+    const recordKey = `${user.id}:${idempotencyKey}`
+    const replay = db.idempotency[recordKey]
     if (replay) {
       if (replay.payloadHash !== payloadHash) {
         return apiError(409, 'IDEMPOTENCY_CONFLICT', 'Esta tentativa já foi usada com outro conteúdo.')
       }
-      const order = db.orders.find((item) => item.id === replay.orderId)
+      const order = db.orders.find((item) => item.id === replay.orderId && item.userId === user.id)
       if (order) return HttpResponse.json(toPublicOrder(order), { status: 200 })
     }
 
@@ -149,7 +151,7 @@ export const orderHandlers = [
     }
 
     db.orders.unshift(order)
-    db.idempotency[idempotencyKey] = { payloadHash, orderId: order.id }
+    db.idempotency[recordKey] = { payloadHash, orderId: order.id }
     saveDb()
     scheduleOrderSettlement(order.id)
 

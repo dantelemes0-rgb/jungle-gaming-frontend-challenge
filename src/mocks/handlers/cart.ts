@@ -1,10 +1,8 @@
 import { http, HttpResponse } from 'msw'
 import { z } from 'zod'
-import Decimal from 'decimal.js'
 import {
   cartKey,
   computeCart,
-  couponPercent,
   getDb,
   getDbCart,
   saveDb,
@@ -182,16 +180,5 @@ export const cartHandlers = [
     cart.couponCode = null
     touchCart(cart)
     return HttpResponse.json(computeCart(cart))
-  }),
-
-  http.get('/api/debug/cart-totals', async ({ request }) => {
-    await bootstrap()
-    const { cart } = currentCart(request)
-    const computed = computeCart(cart)
-    return HttpResponse.json({
-      ...computed,
-      couponPercent: couponPercent(cart.couponCode),
-      subtotalAsNumberRisk: new Decimal(computed.subtotalEth).toNumber(),
-    })
   }),
 ]
