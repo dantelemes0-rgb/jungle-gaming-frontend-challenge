@@ -54,6 +54,7 @@ export async function login(page: Page, user: keyof typeof USERS = 'ana'): Promi
   await page.getByLabel('E-mail').fill(credentials.email)
   await page.getByLabel('Senha').fill(credentials.password)
   await page.getByRole('button', { name: 'Entrar' }).click()
+  await expect(page).not.toHaveURL(/\/login/, { timeout: 20_000 })
   await expect(page.getByRole('button', { name: 'Menu da conta' })).toBeVisible()
 }
 

@@ -1,5 +1,11 @@
 ﻿import { test, expect } from '@playwright/test'
-import { addToCart, fillCheckoutAndConfirm, login, resetApp } from './helpers'
+import {
+  addToCart,
+  fillCheckoutAndConfirm,
+  login,
+  resetApp,
+  setScenario,
+} from './helpers'
 
 test.describe('7. Falhas de pagamento, clique repetido e timeout', () => {
   test('pagamento recusado preserva os itens no carrinho', async ({ page }) => {
@@ -28,6 +34,29 @@ test.describe('7. Falhas de pagamento, clique repetido e timeout', () => {
     })
 
     await page.getByRole('button', { name: 'Confirmar e pagar' }).click()
+    await expect(page).toHaveURL(/\/orders\/ord-/, { timeout: 15_000 })
+    await expect(page.getByText('Confirmado', { exact: true })).toBeVisible({ timeout: 15_000 })
+  })
+
+  test('após timeout, a troca de usuário não herda a chave de idempotência', async ({ page }) => {
+    await resetApp(page, 'order-timeout')
+    await login(page, 'ana')
+    await addToCart(page, 'nft-12')
+    await fillCheckoutAndConfirm(page)
+
+    await expect(page.getByRole('alert')).toContainText('Não foi possível conectar', {
+      timeout: 15_000,
+    })
+
+    await page.getByRole('button', { name: 'Menu da conta' }).click()
+    await page.getByRole('menuitem', { name: 'Sair' }).click()
+    await expect(page.getByRole('link', { name: 'Entrar' })).toBeVisible()
+
+    await setScenario(page, 'default')
+    await login(page, 'bruno')
+    await addToCart(page, 'nft-03')
+    await fillCheckoutAndConfirm(page)
+
     await expect(page).toHaveURL(/\/orders\/ord-/, { timeout: 15_000 })
     await expect(page.getByText('Confirmado', { exact: true })).toBeVisible({ timeout: 15_000 })
   })
