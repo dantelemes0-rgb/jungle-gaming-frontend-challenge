@@ -30,7 +30,7 @@ Trecho literal do enunciado (§12):
 | Vercel é obrigatório? | **Não.** É “recomendado”, não exigido. |
 | Publicar a aplicação é obrigatório? | **Sim.** Sem URL pública a entrega está incompleta. |
 | Só o repositório basta? | **Não.** O formulário pede repositório **e** aplicação publicada. |
-| GitHub Pages vale? | **Sim.** É uma URL pública estática; atende ao requisito (com ajustes de SPA). |
+| GitHub Pages vale? | **Atende ao critério de “URL pública”, mas não está na lista de provedores citados no enunciado.** Usar apenas como último recurso; preferir Netlify ou Cloudflare Pages. |
 | Repositório precisa ser acessível? | **Sim.** Público ou com acesso ao time. O nosso é **público**. |
 
 ### O que o formulário de entrega pede
@@ -211,8 +211,9 @@ Ações fora do escopo não podem aparentar sucesso funcional.
 | **GitHub Pages** | grátis | a conta que já existe | médio | exige `base`, `basepath`, `404.html` e ajuste do service worker |
 | Vercel | grátis (Hobby) | conta Vercel | baixo | candidato **não possui** conta |
 
-**Recomendação:** Netlify Drop (2 minutos, sem CLI, sem cartão). Se a preferência for não criar
-conta em terceiros, implementar GitHub Pages com os ajustes da §11.1 do `CONTEXTO.md`.
+**Recomendação:** Netlify Drop (2 minutos, sem CLI, sem cartão). É gratuito e está na lista de
+provedores aceitos pelo enunciado. Se a preferência for não criar conta em terceiros, avaliar
+GitHub Pages **como último recurso** (não citado no enunciado) com os ajustes da §11.1 do `CONTEXTO.md`.
 
 ---
 
