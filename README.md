@@ -169,9 +169,9 @@ O `wrangler.workers.jsonc` usa `not_found_handling: "single-page-application"`, 
 deep link e refresh funcionam com 200. Os headers de segurança vêm de `public/_headers`
 (copiado para `dist/`).
 
-**Alternativa (Cloudflare Pages):** `https://greenmint-marketplace.pages.dev` — publicada com
-`npx wrangler pages deploy dist --project-name=greenmint-marketplace`. Em Pages, o fallback SPA
-usa `404.html` (a rota renderiza, mas com status 404); por isso a URL de produção é a de Workers.
+**Alternativa (Cloudflare Pages):** `npx wrangler pages deploy dist --project-name=kurio-marketplace`.
+Em Pages, o fallback SPA usa `404.html` (a rota renderiza, mas com status 404); por isso a URL de
+produção é a de Workers.
 
 **Netlify (alternativa):** arraste `dist/` em https://app.netlify.com/drop.
 
@@ -187,7 +187,8 @@ Checklist pós-deploy: `/` com catálogo, `/nft/nft-03` direto, refresh em `/car
 ## 9. Performance (Lighthouse)
 
 Auditoria contra a **URL publicada** (Cloudflare, com compressão), cenário `default`,
-3 execuções por página/perfil (mediana). Relatórios em `lighthouse/reports/`.
+3 execuções por página/perfil (mediana). Resumo em `lighthouse/reports/summary.md`;
+os HTML/JSON completos são gerados localmente por `npm run audit:lighthouse`.
 Medir no `vite preview` local (sem compressão) costuma dar 4–8 pontos menos.
 
 | Perfil | Página | Performance | A11y | Boas práticas | SEO | LCP | CLS | TBT |

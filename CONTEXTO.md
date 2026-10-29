@@ -1,6 +1,6 @@
 # CONTEXTO — Kurio (Jungle Gaming Frontend Challenge)
 
-> **Para o próximo agente:** leia este arquivo inteiro antes de agir. Ele descreve o que existe, como rodar, o que já foi validado, o que falta e quais regras não podem ser quebradas.
+> **Para quem for continuar este projeto:** leia este arquivo inteiro antes de agir. Ele descreve o que existe, como rodar, o que já foi validado, o que falta e quais regras não podem ser quebradas.
 > Última atualização: **2026-10-29, 04:50** (horário local).
 > Documento irmão: `ARCHITECTURE.md` (decisões técnicas detalhadas) e `README.md` (setup e uso).
 
@@ -59,7 +59,7 @@ npm run test:e2e
 > **Windows/PowerShell:** `npm` pode estar bloqueado pela execution policy. Use `npm.cmd` ou rode
 > `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
-> **OneDrive:** o projeto está dentro do OneDrive. Isso deixa `node_modules` lento. Recomendação para o próximo agente: manter **um único** `npm install` em `app/`; não instalar dependências nas worktrees.
+> **OneDrive:** o projeto está dentro do OneDrive. Isso deixa `node_modules` lento. Recomendação: manter **um único** `npm install` em `app/`; não instalar dependências nas worktrees.
 
 ---
 
@@ -242,7 +242,7 @@ Baselines visuais foram geradas em **Windows** (`*-win32.png`). Em Linux/CI, reg
 **Produção:** https://kurio.jungle-marketplace.workers.dev
 (Cloudflare Workers + Static Assets, SPA com status 200 em todas as rotas)
 
-**Backup:** https://greenmint-marketplace.pages.dev (Cloudflare Pages; deep link renderiza com 404 de status)
+**Backup:** a URL anterior do Worker permanece ativa durante a transição (mesma build).
 
 Comando de deploy:
 
@@ -256,7 +256,7 @@ npx wrangler deploy -c wrangler.workers.jsonc
 1. Rodar `npm run build` em `app/`.
 2. Abrir https://app.netlify.com/drop e arrastar a pasta `dist/` (ou o ZIP em `deploy/`).
 3. Criar conta gratuita (login com GitHub) para o site permanecer.
-4. Copiar a URL pública (ex.: `https://greenmint-xxxx.netlify.app`).
+4. Copiar a URL pública (ex.: `https://kurio-xxxx.netlify.app`).
 5. Testar: `/nft/nft-03` direto, refresh, mocks e socket.
 
 O `netlify.toml` já configura build, publish, SPA fallback e cache.
@@ -318,6 +318,6 @@ worktrees/qa                    feat/qa
 - Commits em Conventional Commits (pt-BR).
 - Remote: `origin` → repo pessoal (push autorizado).
 - `node_modules` só em `app/`.
-- Worktrees são cópias do mesmo commit; servem para trabalho paralelo por agentes.
+- Worktrees são cópias do mesmo commit; servem para trabalho paralelo.
 
 ---

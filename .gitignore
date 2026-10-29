@@ -19,11 +19,9 @@ blob-report
 playwright/.cache
 coverage
 
-# Lighthouse: versiona o resumo e a mediana (run 2); demais execuções ficam locais
+# Lighthouse: versiona apenas o resumo; HTML/JSON completos ficam locais
 lighthouse/reports/*
 !lighthouse/reports/summary.md
-!lighthouse/reports/*-2.html
-!lighthouse/reports/*-2.json
 
 # Editor
 .vscode/*

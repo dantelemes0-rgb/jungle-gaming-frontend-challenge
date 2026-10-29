@@ -229,7 +229,7 @@ export async function createSeedDb(): Promise<Db> {
 
   return {
     schemaVersion: 1,
-    seed: 'greenmint-v1',
+    seed: 'kurio-v1',
     users,
     wallets: buildWallets(),
     nfts,

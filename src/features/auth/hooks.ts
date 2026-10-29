@@ -67,7 +67,7 @@ export function useRegister() {
         expiresAt: session.expiresAt,
       })
       await queryClient.invalidateQueries({ queryKey: ['cart'] })
-      toast.success('Conta criada. Bem-vindo à GreenMint.')
+      toast.success('Conta criada. Bem-vindo à Kurio.')
     },
     onError: (error: ApiError) => {
       toast.error(error.message)

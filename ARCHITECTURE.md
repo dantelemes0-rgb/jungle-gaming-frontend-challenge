@@ -197,7 +197,7 @@ que o `socket.io-client` use o `WebSocket` interceptado — sem isso o tempo rea
 quebra em produção.
 
 Remediação planejada: pré-render das rotas públicas, MSW sob demanda pós-paint,
-`manualChunks` e imagens responsivas. Relatórios: `lighthouse/reports/`.
+`manualChunks` e imagens responsivas. Resumo: `lighthouse/reports/summary.md`.
 
 ---
 

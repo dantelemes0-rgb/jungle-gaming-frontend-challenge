@@ -17,7 +17,7 @@ let cached: Db | null = null
 export async function ensureDb(): Promise<Db> {
   if (cached) return cached
   const stored = readJson<Db | null>(DB_KEY, null)
-  if (stored && stored.schemaVersion === 1 && stored.seed === 'greenmint-v1') {
+  if (stored && stored.schemaVersion === 1 && stored.seed === 'kurio-v1') {
     cached = stored
     return cached
   }

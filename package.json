@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "GreenMint — NFT Marketplace (Jungle Gaming frontend challenge)",
+  "description": "Kurio — NFT Marketplace (Jungle Gaming frontend challenge)",
   "engines": {
     "node": ">=20.19.0"
   },

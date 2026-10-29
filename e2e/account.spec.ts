@@ -9,12 +9,12 @@ test.describe('8. Perfil, avatar, senha e carteiras', () => {
 
   test('edita o perfil e persiste após refresh', async ({ page }) => {
     await page.goto('/account/profile')
-    await page.getByLabel('Nome').fill('Ana GreenMint')
+    await page.getByLabel('Nome').fill('Ana Ribeiro')
     await page.getByRole('button', { name: 'Salvar alterações' }).click()
 
     await expect(page.getByText('Perfil atualizado.')).toBeVisible()
     await page.reload()
-    await expect(page.getByLabel('Nome')).toHaveValue('Ana GreenMint')
+    await expect(page.getByLabel('Nome')).toHaveValue('Ana Ribeiro')
   })
 
   test('valida endereço de carteira e impede duplicidade', async ({ page }) => {
