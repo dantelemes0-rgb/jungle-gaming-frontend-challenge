@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" role="img" aria-label="Arte generativa 2">
+  <defs>
+    <radialGradient id="g2" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#c46a2f" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#1a120b" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#070907"/>
+    </radialGradient>
+    <linearGradient id="l2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4e285"/>
+      <stop offset="100%" stop-color="#c46a2f"/>
+    </linearGradient>
+    <filter id="blur2"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+  <rect width="640" height="640" fill="url(#g2)"/>
+  <rect x="48.8" y="342.4" width="45.5" height="257.6" rx="8" fill="#f4e285" opacity="0.12"/><rect x="153.9" y="511.7" width="35.6" height="88.3" rx="8" fill="#f4e285" opacity="0.08"/><rect x="268.1" y="283.4" width="47.1" height="316.6" rx="8" fill="#f4e285" opacity="0.17"/><rect x="384.2" y="305.6" width="27.2" height="294.4" rx="8" fill="#f4e285" opacity="0.17"/><rect x="489.4" y="485.7" width="42.1" height="114.3" rx="8" fill="#f4e285" opacity="0.07"/>
+  <g opacity="0.5" stroke="#f4e285" stroke-width="1" fill="none">
+    <circle cx="324.1" cy="262.4" r="249.7" opacity="0.25"/>
+    <circle cx="324.1" cy="262.4" r="219.7" opacity="0.4"/>
+  </g>
+  <circle cx="324.1" cy="262.4" r="189.7" fill="url(#l2)" opacity="0.9"/>
+  <circle cx="294.1" cy="222.4" r="75.2" fill="#070907" opacity="0.55"/>
+  <g transform="rotate(102 324.1 262.4)" opacity="0.85">
+    <rect x="164.1" y="258.4" width="320" height="8" rx="4" fill="#f4e285" opacity="0.5"/>
+    <rect x="320.1" y="102.4" width="8" height="320" rx="4" fill="#f4e285" opacity="0.3"/>
+  </g>
+  <circle cx="324.1" cy="262.4" r="220" fill="#f4e285" opacity="0.06" filter="url(#blur2)"/>
+  <text x="48" y="596" font-family="monospace" font-size="20" fill="#f4e285" opacity="0.7">GREENMINT · 002</text>
+</svg>
