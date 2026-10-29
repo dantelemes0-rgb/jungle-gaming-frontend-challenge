@@ -1,5 +1,8 @@
 # GreenMint — NFT Marketplace
 
+**Demo publicada:** https://greenmint-marketplace-app.jungle-marketplace.workers.dev
+**Repositório:** https://github.com/dantelemes0-rgb/jungle-gaming-frontend-challenge
+
 Desafio técnico Frontend da **Jungle Gaming**: marketplace de NFTs com React + TypeScript, APIs simuladas com MSW, tempo real com Socket.IO, testes E2E com Playwright e auditoria com Lighthouse.
 
 > **Consignas do desafio (fonte de verdade): [`CONSIGNAS.md`](./CONSIGNAS.md).**
@@ -151,24 +154,29 @@ Decisões, cache, sessão e limitações: [`ARCHITECTURE.md`](./ARCHITECTURE.md)
 
 ---
 
-## 8. Deploy (Cloudflare Pages)
+## 8. Deploy (Cloudflare, gratuito)
 
-O projeto é uma SPA estática. Os arquivos `public/_redirects` (fallback SPA) e
-`public/_headers` (segurança e cache) são copiados para `dist/` e funcionam no
-Cloudflare Pages e no Netlify.
+Publicado em **Cloudflare Workers + Static Assets** (SPA nativa, todas as rotas com status 200):
 
-**Cloudflare Pages (via Wrangler):**
+- Produção: **https://greenmint-marketplace-app.jungle-marketplace.workers.dev**
 
 ```bash
 npm run build
-npx wrangler pages project create greenmint --production-branch=main
-npx wrangler pages deploy dist --project-name=greenmint --branch=main
+npx wrangler deploy -c wrangler.workers.jsonc
 ```
 
-Variáveis: `CLOUDFLARE_API_TOKEN` (token com permissão *Cloudflare Pages: Edit*) e
-`CLOUDFLARE_ACCOUNT_ID`.
+O `wrangler.workers.jsonc` usa `not_found_handling: "single-page-application"`, então
+deep link e refresh funcionam com 200. Os headers de segurança vêm de `public/_headers`
+(copiado para `dist/`).
+
+**Alternativa (Cloudflare Pages):** `https://greenmint-marketplace.pages.dev` — publicada com
+`npx wrangler pages deploy dist --project-name=greenmint-marketplace`. Em Pages, o fallback SPA
+usa `404.html` (a rota renderiza, mas com status 404); por isso a URL de produção é a de Workers.
 
 **Netlify (alternativa):** arraste `dist/` em https://app.netlify.com/drop.
+
+Checklist pós-deploy: `/` com catálogo, `/nft/nft-03` direto, refresh em `/cart` e `/orders/...`,
+login, compra confirmada e `mockServiceWorker.js` respondendo 200.
 
 **GitHub Pages (alternativa):** exige `base` relativo ao nome do repositório, `serviceWorker.url` com `import.meta.env.BASE_URL`, `basepath` no router e cópia de `index.html` para `404.html`. Passo a passo em `CONTEXTO.md` §11.1.
 

@@ -1,3 +1,4 @@
+﻿// build: 2026-10-29T07:10
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
@@ -21,7 +22,7 @@ async function bootstrap() {
   ])
 
   const container = document.getElementById('root')
-  if (!container) throw new Error('Elemento #root não encontrado')
+  if (!container) throw new Error('Elemento #root nÃ£o encontrado')
 
   createRoot(container).render(
     <StrictMode>
@@ -33,3 +34,4 @@ async function bootstrap() {
 }
 
 void bootstrap()
+

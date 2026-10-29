@@ -234,11 +234,22 @@ Baselines visuais foram geradas em **Windows** (`*-win32.png`). Em Linux/CI, reg
 
 ## 11. O que falta (ordem sugerida)
 
-### 11.1 Deploy gratuito (obrigatório no enunciado)
+### 11.1 Deploy gratuito (obrigatório no enunciado) — ✅ CONCLUÍDO
 
-> **Atenção:** o enunciado **não exige Netlify**. Exige **URL pública**. Netlify está entre as
-> opções aceitas (junto de Vercel e Cloudflare Pages). GitHub Pages também atende, com ajustes.
-> Regra completa: `CONSIGNAS.md` §1 e §6.
+> **Atenção:** o enunciado **não exige Netlify**. Exige **URL pública**. Netlify, Vercel e
+> Cloudflare Pages são aceitos. Regra completa: `CONSIGNAS.md` §1 e §6.
+
+**Produção:** https://greenmint-marketplace-app.jungle-marketplace.workers.dev
+(Cloudflare Workers + Static Assets, SPA com status 200 em todas as rotas)
+
+**Backup:** https://greenmint-marketplace.pages.dev (Cloudflare Pages; deep link renderiza com 404 de status)
+
+Comando de deploy:
+
+```bash
+npm run build
+npx wrangler deploy -c wrangler.workers.jsonc
+```
 
 **Opção A — Netlify Drop (mais rápida, sem CLI, sem Vercel)**
 

@@ -1,3 +1,4 @@
+﻿/* build: 2026-10-29T07:10 */
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/space-grotesk';
 @import 'tailwindcss';
@@ -130,3 +131,7 @@
     scroll-behavior: auto !important;
   }
 }
+
+
+.build-marker { --build-id: 20261029; }
+
