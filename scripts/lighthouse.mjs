@@ -10,7 +10,8 @@ import * as chromeLauncher from 'chrome-launcher'
  */
 
 const PORT = 4173
-const BASE = `http://localhost:${PORT}`
+const REMOTE = process.env.LH_URL
+const BASE = REMOTE ?? `http://localhost:${PORT}`
 const PAGES = [
   { name: 'home', path: '/' },
   { name: 'detail', path: '/nft/nft-03' },
@@ -35,16 +36,18 @@ async function waitForServer(url, timeoutMs = 60_000) {
   throw new Error(`Preview não respondeu em ${url}`)
 }
 
-const server = spawn(
-  process.execPath,
-  ['node_modules/vite/bin/vite.js', 'preview', '--port', String(PORT), '--strictPort'],
-  { stdio: 'ignore' },
-)
+const server = REMOTE
+  ? null
+  : spawn(
+      process.execPath,
+      ['node_modules/vite/bin/vite.js', 'preview', '--port', String(PORT), '--strictPort'],
+      { stdio: 'ignore' },
+    )
 
 let chrome
 
 try {
-  await waitForServer(BASE)
+  if (!REMOTE) await waitForServer(BASE)
   chrome = await chromeLauncher.launch({
     chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'],
     chromePath: process.env.CHROME_PATH || undefined,
@@ -91,11 +94,11 @@ try {
         metrics.cls.push(result.lhr.audits['cumulative-layout-shift']?.numericValue ?? 0)
         metrics.tbt.push(result.lhr.audits['total-blocking-time']?.numericValue ?? 0)
 
-        const metrics = result.lhr.audits
+        const audits = result.lhr.audits
         console.log(
           `${profile}/${page.name} #${run}: ` +
             CATEGORIES.map((key) => `${key}=${Math.round((result.lhr.categories[key]?.score ?? 0) * 100)}`).join(' ') +
-            ` | LCP=${metrics['largest-contentful-paint']?.displayValue} CLS=${metrics['cumulative-layout-shift']?.displayValue} TBT=${metrics['total-blocking-time']?.displayValue}`,
+            ` | LCP=${audits['largest-contentful-paint']?.displayValue} CLS=${audits['cumulative-layout-shift']?.displayValue} TBT=${audits['total-blocking-time']?.displayValue}`,
         )
       }
 
@@ -129,7 +132,7 @@ try {
   writeFileSync(
     'lighthouse/reports/summary.md',
     `# Lighthouse — mediana de ${RUNS} execuções\n\n` +
-      `Ambiente: ${process.platform} · Node ${process.version} · Chrome headless\n` +
+      `Ambiente: ${BASE} · ${process.platform} · Node ${process.version} · Chrome headless\n` +
       `Build: \`npm run build\` · Cenário: \`default\`\n\n${header}\n${body}\n`,
   )
 
@@ -137,5 +140,5 @@ try {
   console.log(`${header}\n${body}`)
 } finally {
   if (chrome) await chrome.kill()
-  server.kill()
+  server?.kill()
 }

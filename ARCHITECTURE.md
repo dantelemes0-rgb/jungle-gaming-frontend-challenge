@@ -177,14 +177,14 @@ Respostas obsoletas: cada consulta usa `queryKey` isolada por parâmetro/usuári
 
 ## 11. Performance
 
-Auditoria medida (build de produção, cenário `default`, mediana de 3 execuções):
+Auditoria medida contra a URL publicada (Cloudflare), cenário `default`, mediana de 3 execuções:
 
-| Perfil | Página | Perf | A11y | BP | SEO | LCP | CLS | TBT |
+| Perfil | Página | Perf | A11y | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | início | 69 | 100 | 100 | 100 | 4,5 s | 0,000 | 633 ms |
-| desktop | detalhe | 79 | 100 | 100 | 100 | 4,1 s | 0,000 | 299 ms |
-| mobile | início | 72 | 100 | 100 | 100 | 4,4 s | 0,051 | 478 ms |
-| mobile | detalhe | 82 | 100 | 100 | 100 | 4,1 s | 0,000 | 255 ms |
+| desktop | início | 74 | 100 | 100 | 100 | 3,1 s | 0,001 | 801 ms |
+| desktop | detalhe | 82 | 100 | 100 | 100 | 3,0 s | 0,000 | 489 ms |
+| mobile | início | 80 | 100 | 100 | 100 | 3,0 s | 0,000 | 570 ms |
+| mobile | detalhe | 86 | 100 | 100 | 100 | 3,0 s | 0,000 | 363 ms |
 
 A11y, boas práticas e SEO atingem as metas. Performance fica abaixo de 90 por
 **débito estrutural de SPA sem SSR** somado ao **MSW obrigatório no build de demo**:

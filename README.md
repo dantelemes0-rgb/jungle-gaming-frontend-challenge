@@ -186,15 +186,16 @@ Checklist pós-deploy: `/` com catálogo, `/nft/nft-03` direto, refresh em `/car
 
 ## 9. Performance (Lighthouse)
 
-Auditoria com build de produção, cenário `default`, 3 execuções por página/perfil
-(mediana). Relatórios completos em `lighthouse/reports/`.
+Auditoria contra a **URL publicada** (Cloudflare, com compressão), cenário `default`,
+3 execuções por página/perfil (mediana). Relatórios em `lighthouse/reports/`.
+Medir no `vite preview` local (sem compressão) costuma dar 4–8 pontos menos.
 
 | Perfil | Página | Performance | A11y | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | início | 69 | 100 | 100 | 100 | 4,5 s | 0,000 | 633 ms |
-| desktop | detalhe | 79 | 100 | 100 | 100 | 4,1 s | 0,000 | 299 ms |
-| mobile | início | 72 | 100 | 100 | 100 | 4,4 s | 0,051 | 478 ms |
-| mobile | detalhe | 82 | 100 | 100 | 100 | 4,1 s | 0,000 | 255 ms |
+| desktop | início | 74 | 100 | 100 | 100 | 3,1 s | 0,001 | 801 ms |
+| desktop | detalhe | 82 | 100 | 100 | 100 | 3,0 s | 0,000 | 489 ms |
+| mobile | início | 80 | 100 | 100 | 100 | 3,0 s | 0,000 | 570 ms |
+| mobile | detalhe | 86 | 100 | 100 | 100 | 3,0 s | 0,000 | 363 ms |
 
 **Metas:** A11y ≥ 95, Boas práticas ≥ 95 e SEO ≥ 90 **atingidas**. Performance ≥ 90
 **não atingida** — causa e plano abaixo (o enunciado permite justificar desvios).
@@ -205,9 +206,9 @@ Auditoria com build de produção, cenário `default`, 3 execuções por página
 3. Hero com 4 imagens + 12 cards na primeira dobra disputam o thread principal.
 4. TBT: parse/execução dos chunks (router ~130 KB gzip, MSW ~107 KB gzip).
 
-**Já corrigido nesta rodada:** CLS do detalhe 0,352 → 0; CLS do início 0,118 → 0;
-SEO 92 → 100 (`robots.txt` + `sitemap.xml`); boot do MSW deixou de bloquear o
-primeiro render (gate no Axios).
+**Já corrigido:** CLS do detalhe 0,352 → 0; CLS do início 0,118 → 0; SEO 92 → 100
+(`robots.txt` + `sitemap.xml`); rotas secundárias em lazy loading (router 400 → 319 KB);
+skeletons alinhados ao layout final.
 
 **Remediação fora do escopo:** pré-render/SSG das rotas públicas, MSW sob demanda
 pós-paint, `manualChunks` para vendor e imagens responsivas (AVIF/WebP).
