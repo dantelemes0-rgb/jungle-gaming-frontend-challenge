@@ -6,6 +6,7 @@ import { http, postJson } from '@/shared/api/http'
 import { queryKeys } from '@/shared/api/query-keys'
 import { getOrCreateIdempotencyKey } from '@/shared/lib/idempotency'
 import { useCart } from '@/features/cart/hooks'
+import { useCurrentUser } from '@/features/auth/hooks'
 
 export interface CheckoutInput {
   quote: Quote
@@ -30,9 +31,11 @@ export function useQuote() {
 
 export function useCreateOrder() {
   const queryClient = useQueryClient()
+  const user = useCurrentUser()
 
   return useMutation({
     mutationFn: async ({ quote, walletId, network, payer }: CheckoutInput) => {
+      if (!user) throw new ApiError(401, 'NO_SESSION', 'Entre novamente para finalizar a compra.')
       const { data } = await http.post<Order>(
         '/orders',
         {
@@ -43,7 +46,7 @@ export function useCreateOrder() {
           network,
           payer,
         },
-        { headers: { 'Idempotency-Key': getOrCreateIdempotencyKey() } },
+        { headers: { 'Idempotency-Key': getOrCreateIdempotencyKey(user.id) } },
       )
       return data
     },

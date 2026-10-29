@@ -16,7 +16,7 @@ export function connectRealtime(token: string): Socket {
     transports: ['websocket'],
     auth: { token },
     reconnection: true,
-    reconnectionAttempts: 10,
+    reconnectionAttempts: 20,
     reconnectionDelay: 600,
     timeout: 5000,
     autoConnect: true,

@@ -46,7 +46,7 @@ export function ScenarioPanel() {
         size="sm"
         onClick={() => setOpen(true)}
         className="fixed bottom-4 left-4 z-30 shadow-[var(--shadow-pop)]"
-        aria-label="Abrir painel de cenários de simulação"
+        aria-label={`Cenário: ${scenario} — abrir painel de simulação`}
       >
         <FlaskConical aria-hidden="true" />
         Cenário: {scenario}

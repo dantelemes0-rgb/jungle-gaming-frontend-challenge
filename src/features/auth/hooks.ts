@@ -6,6 +6,7 @@ import { ApiError } from '@/shared/api/errors'
 import { clearToken, getToken, setToken } from '@/shared/api/http'
 import { queryKeys } from '@/shared/api/query-keys'
 import { disconnectRealtime } from '@/realtime/socket'
+import { resetIdempotencyKey } from '@/shared/lib/idempotency'
 import {
   fetchSession,
   loginRequest,
@@ -81,6 +82,7 @@ export function useLogout() {
     mutationFn: logoutRequest,
     onSettled: async () => {
       clearToken()
+      resetIdempotencyKey()
       disconnectRealtime()
       queryClient.clear()
       toast.success('Sessão encerrada.')

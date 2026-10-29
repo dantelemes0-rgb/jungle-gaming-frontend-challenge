@@ -3,6 +3,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { onSessionEvent } from '@/shared/api/http'
+import { resetIdempotencyKey } from '@/shared/lib/idempotency'
 import { Button } from '@/shared/ui/button'
 import { EmptyState } from '@/shared/components/states'
 import { Footer } from '@/shared/components/footer'
@@ -27,6 +28,7 @@ function RootLayout() {
   useEffect(() => {
     return onSessionEvent((event) => {
       if (event !== 'expired') return
+      resetIdempotencyKey()
       queryClient.clear()
       toast.error('Sessão expirada. Entre novamente.')
       const redirect = encodeURIComponent(window.location.pathname + window.location.search)

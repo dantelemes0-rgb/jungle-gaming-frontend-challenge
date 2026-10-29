@@ -6,7 +6,7 @@
 Desafio técnico Frontend da **Jungle Gaming**: marketplace de NFTs com React + TypeScript, APIs simuladas com MSW, tempo real com Socket.IO, testes E2E com Playwright e auditoria com Lighthouse.
 
 > **Consignas do desafio (fonte de verdade): [`CONSIGNAS.md`](./CONSIGNAS.md).**
-> Contexto de handoff: [`CONTEXTO.md`](./CONTEXTO.md). Decisões: [`ARCHITECTURE.md`](./ARCHITECTURE.md).
+> Decisões e limitações: [`ARCHITECTURE.md`](./ARCHITECTURE.md). Guia de avaliação: [`COMO-AVALIAR.md`](./COMO-AVALIAR.md).
 
 > **Tudo é simulado.** Não há blockchain, carteira real, pagamento real ou backend externo. O mock roda na camada de rede (MSW) e persiste em `localStorage`.
 
@@ -178,7 +178,7 @@ usa `404.html` (a rota renderiza, mas com status 404); por isso a URL de produç
 Checklist pós-deploy: `/` com catálogo, `/nft/nft-03` direto, refresh em `/cart` e `/orders/...`,
 login, compra confirmada e `mockServiceWorker.js` respondendo 200.
 
-**GitHub Pages (alternativa):** exige `base` relativo ao nome do repositório, `serviceWorker.url` com `import.meta.env.BASE_URL`, `basepath` no router e cópia de `index.html` para `404.html`. Passo a passo em `CONTEXTO.md` §11.1.
+**GitHub Pages (alternativa):** exige `base` relativo ao nome do repositório, `serviceWorker.url` com `import.meta.env.BASE_URL`, `basepath` no router e cópia de `index.html` para `404.html`. Passo a passo na seção 8.
 
 Checklist pós-deploy: `/` com catálogo, `/nft/nft-03` direto, refresh em `/cart` e `/orders/...`, login, compra confirmada e `mockServiceWorker.js` respondendo 200.
 

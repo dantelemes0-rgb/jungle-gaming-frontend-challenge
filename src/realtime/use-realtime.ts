@@ -9,6 +9,7 @@ import type {
 } from '@/shared/api/contracts'
 import { clearToken, emitSessionEvent, getToken } from '@/shared/api/http'
 import { useSession } from '@/features/auth/hooks'
+import { resetIdempotencyKey } from '@/shared/lib/idempotency'
 import { connectRealtime, disconnectRealtime } from './socket'
 import { VersionGuard } from './version-guard'
 
@@ -76,9 +77,15 @@ export function useRealtime(): void {
       // A cotação NÃO é refeita automaticamente: o checkout precisa exigir
       // nova confirmação do usuário com os valores atualizados.
 
-      toast.info('Um NFT do seu carrinho foi atualizado.', {
-        description: 'Confira o novo preço e a disponibilidade antes de finalizar.',
-      })
+      const cart = queryClient.getQueryData<{ items: Array<{ nftId: string }> }>([
+        'cart',
+        userId ?? 'guest',
+      ])
+      if (cart?.items.some((item) => item.nftId === payload.nftId)) {
+        toast.info('Um NFT do seu carrinho foi atualizado.', {
+          description: 'Confira o novo preço e a disponibilidade antes de finalizar.',
+        })
+      }
     }
 
     const handleOrderUpdated = (payload: OrderUpdatedEvent) => {
@@ -115,6 +122,7 @@ export function useRealtime(): void {
 
     const handleSessionExpired = () => {
       clearToken()
+      resetIdempotencyKey()
       disconnectRealtime()
       queryClient.clear()
       emitSessionEvent('expired')
