@@ -22,6 +22,7 @@ test.describe('1. Catálogo: busca, filtros, ordenação, paginação e históri
     await page.getByRole('button', { name: 'Página 2' }).click()
     await expect(page).toHaveURL(/page=2/)
 
+    await page.getByText('Mais filtros').click()
     await page.getByLabel('Raridade').click()
     await page.getByRole('option', { name: 'Épica' }).click()
 

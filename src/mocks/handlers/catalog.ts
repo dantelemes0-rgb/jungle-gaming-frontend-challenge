@@ -110,13 +110,24 @@ export const catalogHandlers = [
     const db = getDb()
     const collections = Array.from(
       new Map(db.nfts.map((nft) => [nft.collection.id, nft.collection])).values(),
-    )
+    ).map((collection) => ({
+      ...collection,
+      count: db.nfts.filter((nft) => nft.collection.id === collection.id).length,
+    }))
+    const categories = (
+      ['art', 'collectible', 'photography', 'music', 'virtual-world'] as const
+    ).map((id) => ({
+      id,
+      count: db.nfts.filter((nft) => nft.category === id).length,
+    }))
     const prices = db.nfts.map((nft) => new Decimal(nft.priceEth))
     const min = prices.reduce((acc, price) => (price.lessThan(acc) ? price : acc), prices[0]!)
     const max = prices.reduce((acc, price) => (price.greaterThan(acc) ? price : acc), prices[0]!)
 
     return HttpResponse.json({
       collections,
+      categories,
+      total: db.nfts.length,
       minPriceEth: min.toFixed(4),
       maxPriceEth: max.toFixed(4),
     })

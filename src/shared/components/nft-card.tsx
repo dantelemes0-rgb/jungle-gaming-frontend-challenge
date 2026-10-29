@@ -93,11 +93,6 @@ export function NftCard({ nft, priority = false }: { nft: Nft; priority?: boolea
               {formatEthWithSymbol(nft.priceEth)}
             </p>
           </div>
-          <p className="text-right text-[11px] text-text-muted">
-            {nft.editionsAvailable} de {nft.editionsTotal}
-            <br />
-            disponíveis
-          </p>
         </div>
       </div>
     </article>

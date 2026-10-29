@@ -60,13 +60,26 @@ export function RegisterPage() {
     (register.error as { status: number }).status === 409
 
   return (
-    <div className="container-page max-w-md py-16">
-      <h1 className="font-display text-3xl font-semibold">Criar conta</h1>
-      <p className="mt-2 text-sm text-text-muted">
-        Leva menos de um minuto. Você poderá favoritar, comprar e cadastrar carteiras.
-      </p>
+    <div className="bg-black/20">
+      <div className="container-page flex max-w-md flex-col py-12">
+        <div className="rounded-[var(--radius-card)] border border-border bg-surface p-6 shadow-[var(--shadow-pop)] sm:p-8">
+          <div className="mb-6 flex gap-6 border-b border-border text-sm">
+            <Link
+              to="/login"
+              search={{ redirect }}
+              className="pb-3 text-text-muted transition-colors hover:text-text"
+            >
+              Entrar
+            </Link>
+            <span className="border-b-2 border-accent pb-3 font-medium text-text">Criar conta</span>
+          </div>
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-4" noValidate>
+          <h1 className="font-display text-2xl font-semibold">Criar conta</h1>
+          <p className="mt-1 text-sm text-text-muted">
+            Leva menos de um minuto. Você poderá favoritar, comprar e cadastrar carteiras.
+          </p>
+
+          <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
         <div>
           <Label htmlFor="name">Nome</Label>
           <Input
@@ -159,6 +172,8 @@ export function RegisterPage() {
           Entrar
         </Link>
       </p>
+        </div>
+      </div>
     </div>
   )
 }

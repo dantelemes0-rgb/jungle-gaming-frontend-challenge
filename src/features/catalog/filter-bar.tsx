@@ -1,6 +1,7 @@
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { CatalogSearch, Category, Rarity, SortOption } from '@/shared/api/contracts'
+import { cn } from '@/shared/lib/cn'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
@@ -11,11 +12,11 @@ import { useFacets } from './hooks'
 const ALL = 'all'
 
 const CATEGORIES: Array<{ value: Category; label: string }> = [
-  { value: 'art', label: 'Arte' },
-  { value: 'collectible', label: 'Colecionável' },
+  { value: 'art', label: 'Arte digital' },
+  { value: 'collectible', label: 'Colecionáveis' },
   { value: 'photography', label: 'Fotografia' },
   { value: 'music', label: 'Música' },
-  { value: 'virtual-world', label: 'Mundo virtual' },
+  { value: 'virtual-world', label: 'Arte 3D' },
 ]
 
 const RARITIES: Array<{ value: Rarity; label: string }> = [
@@ -43,6 +44,8 @@ interface FilterProps {
 export function CatalogFilters({ search, onChange, onClear }: FilterProps) {
   const { data: facets } = useFacets()
   const [query, setQuery] = useState(search.q ?? '')
+  const [minPrice, setMinPrice] = useState(search.minPrice ?? '')
+  const [maxPrice, setMaxPrice] = useState(search.maxPrice ?? '')
   const activeCount = [
     search.q,
     search.collection,
@@ -58,6 +61,11 @@ export function CatalogFilters({ search, onChange, onClear }: FilterProps) {
   }, [search.q])
 
   useEffect(() => {
+    setMinPrice(search.minPrice ?? '')
+    setMaxPrice(search.maxPrice ?? '')
+  }, [search.minPrice, search.maxPrice])
+
+  useEffect(() => {
     const timer = window.setTimeout(() => {
       if ((search.q ?? '') === query) return
       onChange({ q: query || undefined, page: 1 })
@@ -66,11 +74,16 @@ export function CatalogFilters({ search, onChange, onClear }: FilterProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
+  const categoryCount = (category: Category) =>
+    facets?.categories.find((item) => item.id === category)?.count ?? 0
+
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-6">
       <div>
-        <Label htmlFor="search">Buscar</Label>
-        <div className="relative mt-1.5">
+        <Label htmlFor="search" className="sr-only">
+          Buscar
+        </Label>
+        <div className="relative">
           <Search
             className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-text-muted"
             aria-hidden="true"
@@ -79,139 +92,179 @@ export function CatalogFilters({ search, onChange, onClear }: FilterProps) {
             id="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Nome, coleção ou criador"
+            placeholder="Buscar por nome, coleção ou criador"
             className="pl-9"
             autoComplete="off"
           />
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-        <div>
-          <Label htmlFor="filter-collection">Coleção</Label>
-          <Select
-            value={search.collection ?? ALL}
-            onValueChange={(value) =>
-              onChange({ collection: value === ALL ? undefined : value, page: 1 })
-            }
-          >
-            <SelectTrigger id="filter-collection" className="mt-1.5">
-              <SelectValue placeholder="Todas" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL}>Todas as coleções</SelectItem>
-              {(facets?.collections ?? []).map((collection) => (
-                <SelectItem key={collection.id} value={collection.id}>
-                  {collection.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="filter-category">Categoria</Label>
-          <Select
-            value={search.category ?? ALL}
-            onValueChange={(value) =>
-              onChange({
-                category: value === ALL ? undefined : (value as Category),
-                page: 1,
-              })
-            }
-          >
-            <SelectTrigger id="filter-category" className="mt-1.5">
-              <SelectValue placeholder="Todas" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL}>Todas as categorias</SelectItem>
-              {CATEGORIES.map((category) => (
-                <SelectItem key={category.value} value={category.value}>
+      <div>
+        <p className="mb-2 text-xs font-medium tracking-[0.14em] text-text-muted uppercase">
+          Coleções
+        </p>
+        <ul className="space-y-0.5">
+          <li>
+            <button
+              type="button"
+              onClick={() => onChange({ category: undefined, page: 1 })}
+              aria-pressed={!search.category}
+              className={cn(
+                'flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors',
+                !search.category
+                  ? 'bg-surface-2 text-text'
+                  : 'text-text-muted hover:bg-surface-2 hover:text-text',
+              )}
+            >
+              Todas
+              <span className="text-xs text-text-muted">{facets?.total ?? 0}</span>
+            </button>
+          </li>
+          {CATEGORIES.map((category) => {
+            const active = search.category === category.value
+            return (
+              <li key={category.value}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onChange({
+                      category: active ? undefined : category.value,
+                      page: 1,
+                    })
+                  }
+                  aria-pressed={active}
+                  className={cn(
+                    'flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors',
+                    active
+                      ? 'bg-surface-2 text-accent'
+                      : 'text-text-muted hover:bg-surface-2 hover:text-text',
+                  )}
+                >
                   {category.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="filter-rarity">Raridade</Label>
-          <Select
-            value={search.rarity ?? ALL}
-            onValueChange={(value) =>
-              onChange({ rarity: value === ALL ? undefined : (value as Rarity), page: 1 })
-            }
-          >
-            <SelectTrigger id="filter-rarity" className="mt-1.5">
-              <SelectValue placeholder="Todas" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL}>Todas as raridades</SelectItem>
-              {RARITIES.map((rarity) => (
-                <SelectItem key={rarity.value} value={rarity.value}>
-                  {rarity.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="filter-status">Disponibilidade</Label>
-          <Select
-            value={search.status ?? ALL}
-            onValueChange={(value) =>
-              onChange({
-                status:
-                  value === ALL ? undefined : (value as 'available' | 'sold_out'),
-                page: 1,
-              })
-            }
-          >
-            <SelectTrigger id="filter-status" className="mt-1.5">
-              <SelectValue placeholder="Todas" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL}>Todos</SelectItem>
-              <SelectItem value="available">Disponíveis</SelectItem>
-              <SelectItem value="sold_out">Esgotados</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <fieldset>
-          <legend className="text-sm font-medium">Preço (ETH)</legend>
-          <div className="mt-1.5 flex items-center gap-2">
-            <label htmlFor="min-price" className="sr-only">
-              Preço mínimo em ETH
-            </label>
-            <Input
-              id="min-price"
-              inputMode="decimal"
-              placeholder={facets ? `mín. ${facets.minPriceEth}` : 'mín.'}
-              defaultValue={search.minPrice ?? ''}
-              onBlur={(event) =>
-                onChange({ minPrice: event.target.value || undefined, page: 1 })
-              }
-            />
-            <span aria-hidden="true" className="text-text-muted">
-              —
-            </span>
-            <label htmlFor="max-price" className="sr-only">
-              Preço máximo em ETH
-            </label>
-            <Input
-              id="max-price"
-              inputMode="decimal"
-              placeholder={facets ? `máx. ${facets.maxPriceEth}` : 'máx.'}
-              defaultValue={search.maxPrice ?? ''}
-              onBlur={(event) =>
-                onChange({ maxPrice: event.target.value || undefined, page: 1 })
-              }
-            />
-          </div>
-        </fieldset>
+                  <span className="text-xs text-text-muted">{categoryCount(category.value)}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
       </div>
+
+      <div>
+        <p className="mb-2 text-xs font-medium tracking-[0.14em] text-text-muted uppercase">
+          Faixa de preço
+        </p>
+        <div className="flex items-center gap-2">
+          <label htmlFor="min-price" className="sr-only">
+            Preço mínimo em ETH
+          </label>
+          <Input
+            id="min-price"
+            inputMode="decimal"
+            value={minPrice}
+            onChange={(event) => setMinPrice(event.target.value)}
+            placeholder={facets ? facets.minPriceEth : 'mín.'}
+          />
+          <span aria-hidden="true" className="text-text-muted">
+            —
+          </span>
+          <label htmlFor="max-price" className="sr-only">
+            Preço máximo em ETH
+          </label>
+          <Input
+            id="max-price"
+            inputMode="decimal"
+            value={maxPrice}
+            onChange={(event) => setMaxPrice(event.target.value)}
+            placeholder={facets ? facets.maxPriceEth : 'máx.'}
+          />
+        </div>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          className="mt-3 w-full"
+          onClick={() =>
+            onChange({
+              minPrice: minPrice || undefined,
+              maxPrice: maxPrice || undefined,
+              page: 1,
+            })
+          }
+        >
+          Aplicar
+        </Button>
+      </div>
+
+      <details className="rounded-[var(--radius-control)] border border-border bg-surface-2/40 px-3 py-2">
+        <summary className="cursor-pointer text-sm font-medium text-text">Mais filtros</summary>
+        <div className="mt-4 flex flex-col gap-4">
+          <div>
+            <Label htmlFor="filter-collection">Coleção</Label>
+            <Select
+              value={search.collection ?? ALL}
+              onValueChange={(value) =>
+                onChange({ collection: value === ALL ? undefined : value, page: 1 })
+              }
+            >
+              <SelectTrigger id="filter-collection" className="mt-1.5">
+                <SelectValue placeholder="Todas" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL}>Todas as coleções</SelectItem>
+                {(facets?.collections ?? []).map((collection) => (
+                  <SelectItem key={collection.id} value={collection.id}>
+                    {collection.name} ({collection.count})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="filter-rarity">Raridade</Label>
+            <Select
+              value={search.rarity ?? ALL}
+              onValueChange={(value) =>
+                onChange({ rarity: value === ALL ? undefined : (value as Rarity), page: 1 })
+              }
+            >
+              <SelectTrigger id="filter-rarity" className="mt-1.5">
+                <SelectValue placeholder="Todas" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL}>Todas as raridades</SelectItem>
+                {RARITIES.map((rarity) => (
+                  <SelectItem key={rarity.value} value={rarity.value}>
+                    {rarity.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="filter-status">Disponibilidade</Label>
+            <Select
+              value={search.status ?? ALL}
+              onValueChange={(value) =>
+                onChange({
+                  status: value === ALL ? undefined : (value as 'available' | 'sold_out'),
+                  page: 1,
+                })
+              }
+            >
+              <SelectTrigger id="filter-status" className="mt-1.5">
+                <SelectValue placeholder="Todas" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL}>Todos</SelectItem>
+                <SelectItem value="available">Disponíveis</SelectItem>
+                <SelectItem value="sold_out">Esgotados</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </details>
 
       {activeCount > 0 ? (
         <Button variant="ghost" size="sm" onClick={onClear} className="self-start">

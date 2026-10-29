@@ -38,7 +38,9 @@ export async function fetchNft(id: string, signal?: AbortSignal): Promise<Nft> {
 }
 
 export interface Facets {
-  collections: Array<{ id: string; name: string }>
+  collections: Array<{ id: string; name: string; count: number }>
+  categories: Array<{ id: string; count: number }>
+  total: number
   minPriceEth: string
   maxPriceEth: string
 }
