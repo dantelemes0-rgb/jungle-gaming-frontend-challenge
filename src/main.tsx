@@ -1,4 +1,3 @@
-﻿// build: 2026-10-29T07:10
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'

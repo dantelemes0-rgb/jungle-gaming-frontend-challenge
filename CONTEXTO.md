@@ -16,7 +16,7 @@
 | Caminho local | `C:\Users\dante\OneDrive\Desktop\JungleGaming\app` |
 | Stack | React 19 · TypeScript 5.9 · Vite 7 · TanStack Router/Query · Axios · Tailwind 4 · shadcn/ui · MSW 2.15 · socket.io-client · Playwright · Lighthouse |
 | Estado | App completa e funcional; **30/30 testes E2E verdes** |
-| Pendente | deploy público (sem Vercel), Lighthouse, guia HTML de estudo |
+| Pendente | Lighthouse (pausado a pedido do candidato) |
 | Prazo | entrega em **29/10/2026** |
 
 Tudo é **simulado**: não há backend, blockchain, carteira ou pagamento real. O MSW é o "backend" e persiste em `localStorage`.
@@ -30,7 +30,7 @@ Tudo é **simulado**: não há backend, blockchain, carteira ou pagamento real. 
 3. **Push só no repositório pessoal** `dantelemes0-rgb/jungle-gaming-frontend-challenge`, já criado e autorizado.
 4. **Sem dados reais.** Usuários, carteiras, hashes e pagamentos são fictícios.
 5. Artigos e código em **português técnico**; conversa com o candidato em **espanhol**.
-6. Não usar Vercel: o candidato **não tem conta**. Preferir opções gratuitas (Netlify Drop ou GitHub Pages).
+6. Deploy em **Cloudflare** (Workers + Static Assets), gratuito, sem Vercel.
 
 ---
 
