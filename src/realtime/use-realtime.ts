@@ -82,6 +82,8 @@ export function useRealtime(): void {
     }
 
     const handleOrderUpdated = (payload: OrderUpdatedEvent) => {
+      // Evento de outro usuário nunca atualiza esta sessão.
+      if (payload.userId && userId && payload.userId !== userId) return
       if (!guard.shouldApply('order', payload.orderId, payload.version, payload.eventId)) return
 
       queryClient.setQueryData(

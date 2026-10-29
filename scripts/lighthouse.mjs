@@ -1,12 +1,12 @@
+import { spawn } from 'node:child_process'
 import { mkdirSync, writeFileSync } from 'node:fs'
-import { spawnSync } from 'node:child_process'
 import lighthouse from 'lighthouse'
 import * as chromeLauncher from 'chrome-launcher'
 
 /**
- * Auditoria Lighthouse: build de produção + preview + cenário padrão dos mocks.
- * Roda 3 medições por página/perfil e grava HTML/JSON + resumo com a mediana.
- * Uso: npm run build && npm run audit:lighthouse
+ * Auditoria Lighthouse: build de produção + preview + cenário padrão.
+ * 3 medições por página/perfil, mediana, relatórios HTML/JSON.
+ * Uso: npm run build && node scripts/lighthouse.mjs
  */
 
 const PORT = 4173
@@ -17,46 +17,81 @@ const PAGES = [
 ]
 const PROFILES = ['desktop', 'mobile']
 const RUNS = 3
+const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo']
 
 mkdirSync('lighthouse/reports', { recursive: true })
 
-const server = spawnSync('npx', ['vite', 'preview', '--port', String(PORT)], {
-  shell: true,
-  detached: true,
-  stdio: 'ignore',
-})
+async function waitForServer(url, timeoutMs = 60_000) {
+  const started = Date.now()
+  while (Date.now() - started < timeoutMs) {
+    try {
+      const response = await fetch(url)
+      if (response.ok) return
+    } catch {
+      // servidor ainda subindo
+    }
+    await new Promise((resolve) => setTimeout(resolve, 500))
+  }
+  throw new Error(`Preview não respondeu em ${url}`)
+}
 
-const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless=new', '--no-sandbox'] })
+const server = spawn(
+  process.execPath,
+  ['node_modules/vite/bin/vite.js', 'preview', '--port', String(PORT), '--strictPort'],
+  { stdio: 'ignore' },
+)
 
-const summary = []
+let chrome
 
 try {
+  await waitForServer(BASE)
+  chrome = await chromeLauncher.launch({
+    chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'],
+    chromePath: process.env.CHROME_PATH || undefined,
+  })
+
+  const rows = []
+
   for (const profile of PROFILES) {
     for (const page of PAGES) {
-      const scores = { performance: [], accessibility: [], 'best-practices': [], seo: [] }
+      const scores = Object.fromEntries(CATEGORIES.map((key) => [key, []]))
 
       for (let run = 1; run <= RUNS; run += 1) {
-        const result = await lighthouse(`${BASE}${page.path}`, {
+        const options = {
           port: chrome.port,
           output: ['html', 'json'],
           logLevel: 'error',
-          formFactor: profile === 'mobile' ? 'mobile' : 'desktop',
-          screenEmulation:
-            profile === 'mobile'
-              ? { mobile: true, width: 390, height: 844, deviceScaleFactor: 3, disabled: false }
-              : { mobile: false, width: 1440, height: 900, deviceScaleFactor: 1, disabled: false },
-          onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
-        })
+          onlyCategories: CATEGORIES,
+          ...(profile === 'desktop'
+            ? { preset: 'desktop' }
+            : {
+                formFactor: 'mobile',
+                screenEmulation: {
+                  mobile: true,
+                  width: 390,
+                  height: 844,
+                  deviceScaleFactor: 3,
+                  disabled: false,
+                },
+              }),
+        }
 
-        const lhr = result.lhr
+        const result = await lighthouse(`${BASE}${page.path}`, options)
         const base = `lighthouse/reports/${profile}-${page.name}-${run}`
         writeFileSync(`${base}.html`, result.report[0])
         writeFileSync(`${base}.json`, result.report[1])
 
-        for (const key of Object.keys(scores)) {
-          const category = lhr.categories[key]
-          if (category?.score != null) scores[key].push(Math.round(category.score * 100))
+        for (const key of CATEGORIES) {
+          const score = result.lhr.categories[key]?.score
+          if (score != null) scores[key].push(Math.round(score * 100))
         }
+
+        const metrics = result.lhr.audits
+        console.log(
+          `${profile}/${page.name} #${run}: ` +
+            CATEGORIES.map((key) => `${key}=${Math.round((result.lhr.categories[key]?.score ?? 0) * 100)}`).join(' ') +
+            ` | LCP=${metrics['largest-contentful-paint']?.displayValue} CLS=${metrics['cumulative-layout-shift']?.displayValue} TBT=${metrics['total-blocking-time']?.displayValue}`,
+        )
       }
 
       const median = Object.fromEntries(
@@ -65,27 +100,29 @@ try {
           return [key, sorted[Math.floor(sorted.length / 2)] ?? 0]
         }),
       )
-      summary.push({ profile, page: page.name, median, runs: scores })
+      rows.push({ profile, page: page.name, median })
     }
   }
 
-  const header = '| Perfil | Página | Performance | A11y | Boas práticas | SEO |\n|---|---|---:|---:|---:|---:|'
-  const rows = summary.map(
-    (item) =>
-      `| ${item.profile} | ${item.page} | ${item.median.performance} | ${item.median.accessibility} | ${item.median['best-practices']} | ${item.median.seo} |`,
-  )
+  const header =
+    '| Perfil | Página | Performance | Acessibilidade | Boas práticas | SEO |\n|---|---|---:|---:|---:|---:|'
+  const body = rows
+    .map(
+      (row) =>
+        `| ${row.profile} | ${row.page} | ${row.median.performance} | ${row.median.accessibility} | ${row.median['best-practices']} | ${row.median.seo} |`,
+    )
+    .join('\n')
+
   writeFileSync(
     'lighthouse/reports/summary.md',
-    `# Lighthouse — mediana de ${RUNS} execuções\n\n${header}\n${rows.join('\n')}\n`,
+    `# Lighthouse — mediana de ${RUNS} execuções\n\n` +
+      `Ambiente: ${process.platform} · Node ${process.version} · Chrome headless\n` +
+      `Build: \`npm run build\` · Cenário: \`default\`\n\n${header}\n${body}\n`,
   )
-  console.log(rows.join('\n'))
+
+  console.log('\nResumo salvo em lighthouse/reports/summary.md')
+  console.log(`${header}\n${body}`)
 } finally {
-  await chrome.kill()
-  if (server.pid) {
-    try {
-      process.kill(-server.pid)
-    } catch {
-      // processo já encerrado
-    }
-  }
+  if (chrome) await chrome.kill()
+  server.kill()
 }

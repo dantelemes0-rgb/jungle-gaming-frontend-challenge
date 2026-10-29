@@ -105,7 +105,7 @@ Detalhes de payloads: `docs/contratos.md`.
 - Interceptor de resposta: `401 SESSION_EXPIRED` → limpa token, emite evento, redireciona para `/login?redirect=<rota atual>`.
 - Expiração durante checkout preserva `redirect`; o carrinho vive no servidor, então o contexto não se perde.
 - Logout: `POST /auth/logout` → `clearToken()` → `queryClient.clear()` → desconecta socket → navega para `/`.
-- Troca de usuário: cache e subscriptions são descartados; eventos nunca cruzam sessões (sala `user:<id>` no mock).
+- Troca de usuário: cache e subscriptions são descartados; cada evento `order.updated` carrega `userId` e o cliente ignora eventos de outra sessão.
 
 ---
 

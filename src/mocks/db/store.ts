@@ -243,6 +243,7 @@ export function settleOrder(orderId: string): void {
       payload: {
         eventId: crypto.randomUUID(),
         orderId: order.id,
+        userId: order.userId,
         version: order.version,
         status: order.status,
         declineReason: order.declineReason,
@@ -301,6 +302,7 @@ export function settleOrder(orderId: string): void {
     payload: {
       eventId: crypto.randomUUID(),
       orderId: order.id,
+      userId: order.userId,
       version: order.version,
       status: order.status,
       txHash: order.txHash,

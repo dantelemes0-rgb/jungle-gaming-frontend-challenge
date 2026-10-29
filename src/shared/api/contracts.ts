@@ -215,6 +215,7 @@ export const orderUpdatedEventSchema = z.object({
   orderId: z.string(),
   version: z.number().int(),
   status: orderStatusSchema,
+  userId: z.string().optional(),
   txHash: z.string().optional(),
   declineReason: z.string().optional(),
   at: isoDateSchema,
