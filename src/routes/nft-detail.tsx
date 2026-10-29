@@ -12,8 +12,9 @@ import { Separator } from '@/shared/ui/separator'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { QuantityStepper } from '@/shared/components/quantity-stepper'
 import { EmptyState, ErrorState } from '@/shared/components/states'
-import { useNft } from '@/features/catalog/hooks'
+import { useNft, useCatalog } from '@/features/catalog/hooks'
 import { useAddToCart } from '@/features/cart/hooks'
+import { NftCard } from '@/shared/components/nft-card'
 import { useCurrentUser } from '@/features/auth/hooks'
 import { useFavorites, useToggleFavorite } from '@/features/favorites/hooks'
 import { rootRoute } from './root'
@@ -123,22 +124,8 @@ function NftDetailPage() {
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <div className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface">
-            <img
-              src={nft.imageUrl}
-              alt={`Arte de ${nft.name}`}
-              width={1200}
-              height={1200}
-              fetchPriority="high"
-              className={cn(
-                'aspect-square w-full object-cover transition-transform duration-300',
-                zoom === 1 && 'scale-125',
-                zoom === 2 && 'scale-150',
-              )}
-            />
-          </div>
-          <div className="mt-3 flex gap-3">
+        <div className="grid grid-cols-[72px_1fr] gap-3">
+          <div className="flex flex-col gap-3">
             {['Visão geral', 'Detalhe 1', 'Detalhe 2'].map((label, index) => (
               <button
                 key={label}
@@ -147,7 +134,7 @@ function NftDetailPage() {
                 aria-pressed={zoom === index}
                 aria-label={`Galeria: ${label}`}
                 className={cn(
-                  'size-20 overflow-hidden rounded-xl border-2 bg-surface transition-colors',
+                  'aspect-square w-full overflow-hidden rounded-lg border-2 bg-surface transition-colors',
                   zoom === index ? 'border-accent' : 'border-border hover:border-border-strong',
                 )}
               >
@@ -166,6 +153,21 @@ function NftDetailPage() {
               </button>
             ))}
           </div>
+
+          <div className="overflow-hidden rounded-[var(--radius-image)] border border-border bg-surface">
+            <img
+              src={nft.imageUrl}
+              alt={`Arte de ${nft.name}`}
+              width={1200}
+              height={1200}
+              fetchPriority="high"
+              className={cn(
+                'aspect-square w-full object-cover transition-transform duration-300',
+                zoom === 1 && 'scale-125',
+                zoom === 2 && 'scale-150',
+              )}
+            />
+          </div>
         </div>
 
         <div>
@@ -183,8 +185,8 @@ function NftDetailPage() {
           </p>
 
           <div className="mt-6 rounded-[var(--radius-card)] border border-border bg-surface p-6">
-            <p className="text-xs tracking-wide text-text-muted uppercase">Preço atual</p>
-            <p className="font-display text-3xl font-semibold">
+            <p className="text-xs tracking-wide text-text-muted uppercase">Preço</p>
+            <p className="text-3xl font-bold text-accent">
               {formatEthWithSymbol(nft.priceEth)}
             </p>
             <p className="mt-1 text-sm text-text-muted">
@@ -193,35 +195,34 @@ function NftDetailPage() {
 
             <Separator className="my-5" />
 
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <p className="mb-2 text-sm font-medium">Quantidade</p>
-                <QuantityStepper
-                  value={qty}
-                  max={Math.max(1, maxQty)}
-                  onChange={setQty}
-                  disabled={soldOut}
-                  label="Quantidade deste NFT"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  onClick={handleFavorite}
-                  aria-pressed={isFavorite}
-                  aria-label={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-                >
-                  <Heart className={cn(isFavorite && 'fill-current text-accent')} aria-hidden="true" />
-                </Button>
-                <Button
-                  size="lg"
-                  disabled={soldOut || addToCart.isPending}
-                  onClick={() => addToCart.mutate({ nftId: nft.id, qty })}
-                >
-                  {soldOut ? 'Edição esgotada' : 'Adicionar ao carrinho'}
-                </Button>
-              </div>
+            <p className="mb-2 text-sm font-medium">Edição</p>
+            <QuantityStepper
+              value={qty}
+              max={Math.max(1, maxQty)}
+              onChange={setQty}
+              disabled={soldOut}
+              label="Quantidade deste NFT"
+            />
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button
+                size="lg"
+                className="flex-1"
+                disabled={soldOut || addToCart.isPending}
+                onClick={() => addToCart.mutate({ nftId: nft.id, qty })}
+              >
+                {soldOut ? 'Edição esgotada' : 'Comprar agora'}
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={handleFavorite}
+                aria-pressed={isFavorite}
+                aria-label={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              >
+                <Heart className={cn(isFavorite && 'fill-current text-accent')} aria-hidden="true" />
+                {isFavorite ? 'Favoritado' : 'Favoritar'}
+              </Button>
             </div>
 
             <p className="mt-4 flex items-center gap-2 text-xs text-text-muted">
@@ -232,7 +233,7 @@ function NftDetailPage() {
 
           <section className="mt-6" aria-labelledby="descricao">
             <h2 id="descricao" className="font-display text-lg font-semibold">
-              Sobre esta edição
+              Sobre este NFT
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-text-muted">{nft.description}</p>
           </section>
@@ -257,6 +258,36 @@ function NftDetailPage() {
           </dl>
         </div>
       </div>
+
+      <RelatedNfts collectionId={nft.collection.id} currentId={nft.id} />
     </div>
+  )
+}
+
+function RelatedNfts({
+  collectionId,
+  currentId,
+}: {
+  collectionId: string
+  currentId: string
+}) {
+  const related = useCatalog({ collection: collectionId, page: 1 })
+  const items = (related.data?.items ?? [])
+    .filter((item) => item.id !== currentId)
+    .slice(0, 4)
+
+  if (items.length === 0) return null
+
+  return (
+    <section className="mt-16" aria-labelledby="mais-colecao">
+      <h2 id="mais-colecao" className="font-display text-2xl font-semibold">
+        Mais desta coleção
+      </h2>
+      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {items.map((item) => (
+          <NftCard key={item.id} nft={item} />
+        ))}
+      </div>
+    </section>
   )
 }

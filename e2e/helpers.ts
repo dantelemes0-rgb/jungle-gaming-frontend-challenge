@@ -60,12 +60,12 @@ export async function login(page: Page, user: keyof typeof USERS = 'ana'): Promi
 
 export async function addToCart(page: Page, nftId = 'nft-03'): Promise<void> {
   await page.goto(`/nft/${nftId}`)
-  await expect(page.getByRole('button', { name: 'Adicionar ao carrinho' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Comprar agora' })).toBeVisible()
 
   const response = page.waitForResponse(
     (res) => res.url().includes('/api/cart/items') && res.request().method() === 'POST',
   )
-  await page.getByRole('button', { name: 'Adicionar ao carrinho' }).click()
+  await page.getByRole('button', { name: 'Comprar agora' }).click()
   await response
   await page.waitForFunction(() => {
     const raw = localStorage.getItem('jg.mock.db.v1')

@@ -9,8 +9,8 @@ test.describe('2. Detalhe do NFT', () => {
   test('acesso direto por URL funciona', async ({ page }) => {
     await page.goto('/nft/nft-05')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    await expect(page.getByText('Preço atual')).toBeVisible()
-    await expect(page.getByRole('button', { name: 'Adicionar ao carrinho' })).toBeVisible()
+    await expect(page.getByText('Sobre este NFT')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Comprar agora' })).toBeVisible()
   })
 
   test('NFT inexistente mostra estado de recurso não encontrado', async ({ page }) => {

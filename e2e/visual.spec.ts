@@ -13,7 +13,7 @@ test.describe('Regressão visual', () => {
 
   test('detalhe do NFT', async ({ page }) => {
     await page.goto('/nft/nft-03')
-    await expect(page.getByText('Preço atual')).toBeVisible()
+    await expect(page.getByText('Sobre este NFT')).toBeVisible()
     await expect(page).toHaveScreenshot('detail.png', { maxDiffPixelRatio: 0.02 })
   })
 
