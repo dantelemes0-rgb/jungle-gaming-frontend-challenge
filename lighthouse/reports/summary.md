@@ -5,7 +5,7 @@ Build: `npm run build` · Cenário: `default`
 
 | Perfil | Página | Performance | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | home | 74 | 100 | 100 | 100 | 3.1 s | 0.001 | 801 ms |
-| desktop | detail | 82 | 100 | 100 | 100 | 3.0 s | 0.000 | 489 ms |
-| mobile | home | 80 | 100 | 100 | 100 | 3.0 s | 0.000 | 570 ms |
-| mobile | detail | 86 | 100 | 100 | 100 | 3.0 s | 0.000 | 363 ms |
+| desktop | home | 84 | 100 | 100 | 100 | 2.4 s | 0.001 | 533 ms |
+| desktop | detail | 90 | 100 | 100 | 100 | 2.5 s | 0.000 | 323 ms |
+| mobile | home | 84 | 100 | 100 | 100 | 2.4 s | 0.051 | 532 ms |
+| mobile | detail | 91 | 100 | 100 | 100 | 2.4 s | 0.000 | 306 ms |

@@ -181,18 +181,20 @@ Auditoria medida contra a URL publicada (Cloudflare), cenário `default`, median
 
 | Perfil | Página | Perf | A11y | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | início | 74 | 100 | 100 | 100 | 3,1 s | 0,001 | 801 ms |
-| desktop | detalhe | 82 | 100 | 100 | 100 | 3,0 s | 0,000 | 489 ms |
-| mobile | início | 80 | 100 | 100 | 100 | 3,0 s | 0,000 | 570 ms |
-| mobile | detalhe | 86 | 100 | 100 | 100 | 3,0 s | 0,000 | 363 ms |
+| desktop | início | 84 | 100 | 100 | 100 | 2,4 s | 0,001 | 533 ms |
+| desktop | detalhe | 90 | 100 | 100 | 100 | 2,5 s | 0,000 | 323 ms |
+| mobile | início | 84 | 100 | 100 | 100 | 2,4 s | 0,051 | 532 ms |
+| mobile | detalhe | 91 | 100 | 100 | 100 | 2,4 s | 0,000 | 306 ms |
 
-A11y, boas práticas e SEO atingem as metas. Performance fica abaixo de 90 por
-**débito estrutural de SPA sem SSR** somado ao **MSW obrigatório no build de demo**:
-o LCP depende de baixar/executar ~700 KB de JS e o TBT sofre com parse dos chunks.
+A11y, boas práticas e SEO atingem as metas (100). Performance ≥ 90 é atingida no
+detalhe (90/91); o início fica em 84 por causa do hero com 4 imagens + 12 cards na
+primeira dobra e do custo de boot do MSW (SPA sem SSR). O LCP ficou em 2,4–2,5 s.
 
 O que foi corrigido: CLS do detalhe (0,352 → 0) e do início (0,118 → 0) ao alinhar
-skeletons ao layout final; SEO 92 → 100 com `robots.txt`/`sitemap.xml`; e um **gate**
-no Axios que permite renderizar antes de o MSW terminar de subir.
+skeletons ao layout final; SEO 92 → 100 com `robots.txt`/`sitemap.xml`; rotas
+secundárias em lazy loading (router 400 → 319 KB). O MSW sobe **antes** do app para
+que o `socket.io-client` use o `WebSocket` interceptado — sem isso o tempo real
+quebra em produção.
 
 Remediação planejada: pré-render das rotas públicas, MSW sob demanda pós-paint,
 `manualChunks` e imagens responsivas. Relatórios: `lighthouse/reports/`.

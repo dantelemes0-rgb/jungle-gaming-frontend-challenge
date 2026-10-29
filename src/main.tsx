@@ -10,15 +10,17 @@ async function bootstrap() {
   const scenario = params.get('mock')
   if (scenario) localStorage.setItem('jg.mock.scenario', scenario)
 
-  // Baixa o app em paralelo com o MSW (evita cascata no carregamento inicial).
-  const appModules = Promise.all([import('./app/router'), import('./app/providers')])
-
+  // MSW precisa estar ativo (e com o WebSocket patchado) antes de carregar a app.
   if (MOCKS_ENABLED) {
     const { startMocks } = await import('./mocks/browser')
     await startMocks()
   }
 
-  const [{ router }, { Providers }] = await appModules
+  // Só então baixa o app: garante que socket.io-client use o WebSocket interceptado.
+  const [{ router }, { Providers }] = await Promise.all([
+    import('./app/router'),
+    import('./app/providers'),
+  ])
 
   const container = document.getElementById('root')
   if (!container) throw new Error('Elemento #root não encontrado')

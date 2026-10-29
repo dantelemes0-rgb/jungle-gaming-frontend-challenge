@@ -192,13 +192,14 @@ Medir no `vite preview` local (sem compressão) costuma dar 4–8 pontos menos.
 
 | Perfil | Página | Performance | A11y | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | início | 74 | 100 | 100 | 100 | 3,1 s | 0,001 | 801 ms |
-| desktop | detalhe | 82 | 100 | 100 | 100 | 3,0 s | 0,000 | 489 ms |
-| mobile | início | 80 | 100 | 100 | 100 | 3,0 s | 0,000 | 570 ms |
-| mobile | detalhe | 86 | 100 | 100 | 100 | 3,0 s | 0,000 | 363 ms |
+| desktop | início | 84 | 100 | 100 | 100 | 2,4 s | 0,001 | 533 ms |
+| desktop | detalhe | 90 | 100 | 100 | 100 | 2,5 s | 0,000 | 323 ms |
+| mobile | início | 84 | 100 | 100 | 100 | 2,4 s | 0,051 | 532 ms |
+| mobile | detalhe | 91 | 100 | 100 | 100 | 2,4 s | 0,000 | 306 ms |
 
-**Metas:** A11y ≥ 95, Boas práticas ≥ 95 e SEO ≥ 90 **atingidas**. Performance ≥ 90
-**não atingida** — causa e plano abaixo (o enunciado permite justificar desvios).
+**Metas:** A11y, Boas práticas e SEO **atingidas (100)**. Performance ≥ 90 **atingida no
+detalhe** (90 desktop / 91 mobile) e em **84 no início** — o hero com 4 imagens + 12 cards
+e o boot do MSW explicam o desvio da home (o enunciado permite justificar desvios).
 
 **Causas:**
 1. SPA sem SSR: o HTML inicial é vazio; o LCP depende de baixar e executar o JS.
