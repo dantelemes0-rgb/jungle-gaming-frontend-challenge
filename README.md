@@ -148,14 +148,22 @@ Decisões, cache, sessão e limitações: [`ARCHITECTURE.md`](./ARCHITECTURE.md)
 
 ---
 
-## 8. Deploy
+## 8. Deploy (gratuito, sem Vercel)
 
-O projeto é uma SPA estática com rewrites para todas as rotas (`vercel.json`).
-Publicado na Vercel com `VITE_ENABLE_MOCKS=true`; o `mockServiceWorker.js` fica em `public/` e é servido na raiz.
+O projeto é uma SPA estática. O `netlify.toml` já configura build, SPA fallback e cache.
+
+**Netlify Drop (recomendado — sem CLI):**
 
 ```bash
-vercel --prod
+npm run build
+# arraste a pasta dist/ em https://app.netlify.com/drop
 ```
+
+**Netlify via Git:** conecte o repositório; build `npm run build`, publish `dist`.
+
+**GitHub Pages (alternativa):** exige `base` relativo ao nome do repositório, `serviceWorker.url` com `import.meta.env.BASE_URL`, `basepath` no router e cópia de `index.html` para `404.html`. Passo a passo em `CONTEXTO.md` §11.1.
+
+Checklist pós-deploy: `/` com catálogo, `/nft/nft-03` direto, refresh em `/cart` e `/orders/...`, login, compra confirmada e `mockServiceWorker.js` respondendo 200.
 
 ---
 
