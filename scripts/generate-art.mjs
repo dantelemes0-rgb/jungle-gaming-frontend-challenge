@@ -58,7 +58,6 @@ function nftSvg(index) {
       <stop offset="0%" stop-color="${accent}"/>
       <stop offset="100%" stop-color="${mid}"/>
     </linearGradient>
-    <filter id="blur${index}"><feGaussianBlur stdDeviation="26"/></filter>
   </defs>
   <rect width="640" height="640" fill="url(#g${index})"/>
   ${bars}
@@ -72,7 +71,6 @@ function nftSvg(index) {
     <rect x="${(cx - 160).toFixed(1)}" y="${(cy - 4).toFixed(1)}" width="320" height="8" rx="4" fill="${accent}" opacity="0.5"/>
     <rect x="${(cx - 4).toFixed(1)}" y="${(cy - 160).toFixed(1)}" width="8" height="320" rx="4" fill="${accent}" opacity="0.3"/>
   </g>
-  <circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="220" fill="${accent}" opacity="0.06" filter="url(#blur${index})"/>
   <text x="48" y="596" font-family="monospace" font-size="20" fill="${accent}" opacity="0.7">KURIO · ${String(index).padStart(3, '0')}</text>
 </svg>`
 }

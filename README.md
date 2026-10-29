@@ -192,14 +192,15 @@ Medir no `vite preview` local (sem compressão) costuma dar 4–8 pontos menos.
 
 | Perfil | Página | Performance | A11y | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | início | 84 | 100 | 100 | 100 | 2,4 s | 0,001 | 533 ms |
-| desktop | detalhe | 90 | 100 | 100 | 100 | 2,5 s | 0,000 | 323 ms |
-| mobile | início | 84 | 100 | 100 | 100 | 2,4 s | 0,051 | 532 ms |
-| mobile | detalhe | 91 | 100 | 100 | 100 | 2,4 s | 0,000 | 306 ms |
+| desktop | início | 78 | 100 | 100 | 100 | 2,6 s | 0,012 | 764 ms |
+| desktop | detalhe | 83 | 100 | 100 | 100 | 2,5 s | 0,000 | 560 ms |
+| mobile | início | 75 | 100 | 100 | 100 | 2,5 s | 0,000 | 1013 ms |
+| mobile | detalhe | 82 | 100 | 100 | 100 | 2,6 s | 0,000 | 598 ms |
 
-**Metas:** A11y, Boas práticas e SEO **atingidas (100)**. Performance ≥ 90 **atingida no
-detalhe** (90 desktop / 91 mobile) e em **84 no início** — o hero com 4 imagens + 12 cards
-e o boot do MSW explicam o desvio da home (o enunciado permite justificar desvios).
+**Metas:** A11y, Boas práticas e SEO **atingidas (100)**. Performance fica em **83/82 no
+detalhe** e **78/75 no início**. O TBT é sensível à CPU compartilhada: em uma execução
+limpa (máquina ociosa) o detalhe chegou a **90/91** e o início a **84**. O LCP ficou em
+2,5–2,6 s e o CLS em 0–0,012.
 
 **Causas:**
 1. SPA sem SSR: o HTML inicial é vazio; o LCP depende de baixar e executar o JS.

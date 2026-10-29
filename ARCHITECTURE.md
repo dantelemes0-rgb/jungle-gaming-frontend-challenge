@@ -181,14 +181,14 @@ Auditoria medida contra a URL publicada (Cloudflare), cenário `default`, median
 
 | Perfil | Página | Perf | A11y | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| desktop | início | 84 | 100 | 100 | 100 | 2,4 s | 0,001 | 533 ms |
-| desktop | detalhe | 90 | 100 | 100 | 100 | 2,5 s | 0,000 | 323 ms |
-| mobile | início | 84 | 100 | 100 | 100 | 2,4 s | 0,051 | 532 ms |
-| mobile | detalhe | 91 | 100 | 100 | 100 | 2,4 s | 0,000 | 306 ms |
+| desktop | início | 78 | 100 | 100 | 100 | 2,6 s | 0,012 | 764 ms |
+| desktop | detalhe | 83 | 100 | 100 | 100 | 2,5 s | 0,000 | 560 ms |
+| mobile | início | 75 | 100 | 100 | 100 | 2,5 s | 0,000 | 1013 ms |
+| mobile | detalhe | 82 | 100 | 100 | 100 | 2,6 s | 0,000 | 598 ms |
 
-A11y, boas práticas e SEO atingem as metas (100). Performance ≥ 90 é atingida no
-detalhe (90/91); o início fica em 84 por causa do hero com 4 imagens + 12 cards na
-primeira dobra e do custo de boot do MSW (SPA sem SSR). O LCP ficou em 2,4–2,5 s.
+A11y, boas práticas e SEO atingem as metas (100). Performance fica em 83/82 no detalhe e
+78/75 no início nesta medição; em execução limpa o detalhe chegou a 90/91. O TBT é
+sensível a CPU compartilhada e é o principal fator de variação. LCP 2,5–2,6 s; CLS ≤ 0,012.
 
 O que foi corrigido: CLS do detalhe (0,352 → 0) e do início (0,118 → 0) ao alinhar
 skeletons ao layout final; SEO 92 → 100 com `robots.txt`/`sitemap.xml`; rotas
@@ -217,9 +217,11 @@ Remediação planejada: pré-render das rotas públicas, MSW sob demanda pós-pa
 
 | Item | Decisão |
 |---|---|
-| Assets | Figma em modo somente leitura; artes e avatares foram gerados localmente (SVG determinístico) |
-| Tipografia | Space Grotesk (títulos) + Inter (texto); aproximação da identidade observada |
-| Cores | Paleta escura com acento verde-limão (`#c8f45c`), extraída por aproximação visual |
+| Marca | O arquivo do Figma usa **Kurio** como marca (wordmark e textos); a aplicação adota essa identidade |
+| Cores | Extraídas do painel: fundo `#140D0A`, superfície `#1E1512`, primário `#D28A4C`, texto `#F5F1EB`, preço `#E89B55` |
+| Tipografia | Título 43/70 bold e eyebrow 14/16 medium (10%) medidos no Figma; a família original não pôde ser lida no viewer, então usamos Space Grotesk + Inter |
+| Assets | As fotos de macacos (Bored Ape) foram substituídas por arte generativa em tons quentes; Figma em modo somente leitura |
+| Estrutura | A home do Figma tem sidebar de coleções com contagens e seções Promos/Blog; entregamos filtros (coleção, categoria, raridade, preço) e mantemos Promos/Blog fora do escopo, como o enunciado permite |
 | Telas ausentes no Figma | 404, estados vazios/erro, drawer do carrinho, seletor de rede e painel de cenários seguem o mesmo padrão |
 | Mobile sem frame | Perfil, carteiras e confirmação foram desenhados de forma responsiva |
 | Socket.IO | Namespace padrão, sem acks/binários, transporte WebSocket |

@@ -9,7 +9,6 @@
       <stop offset="0%" stop-color="#d9c3a5"/>
       <stop offset="100%" stop-color="#7c5a3c"/>
     </linearGradient>
-    <filter id="blur17"><feGaussianBlur stdDeviation="26"/></filter>
   </defs>
   <rect width="640" height="640" fill="url(#g17)"/>
   <rect x="42.2" y="320.6" width="32.4" height="279.4" rx="8" fill="#d9c3a5" opacity="0.16"/><rect x="156.0" y="285.7" width="27.1" height="314.3" rx="8" fill="#d9c3a5" opacity="0.18"/><rect x="266.9" y="395.5" width="44.3" height="204.5" rx="8" fill="#d9c3a5" opacity="0.15"/><rect x="379.0" y="296.1" width="55.8" height="303.9" rx="8" fill="#d9c3a5" opacity="0.10"/><rect x="494.8" y="302.5" width="22.8" height="297.5" rx="8" fill="#d9c3a5" opacity="0.18"/>
@@ -23,6 +22,5 @@
     <rect x="246.5" y="252.9" width="320" height="8" rx="4" fill="#d9c3a5" opacity="0.5"/>
     <rect x="402.5" y="96.9" width="8" height="320" rx="4" fill="#d9c3a5" opacity="0.3"/>
   </g>
-  <circle cx="406.5" cy="256.9" r="220" fill="#d9c3a5" opacity="0.06" filter="url(#blur17)"/>
   <text x="48" y="596" font-family="monospace" font-size="20" fill="#d9c3a5" opacity="0.7">KURIO · 017</text>
 </svg>
