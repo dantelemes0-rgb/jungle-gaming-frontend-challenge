@@ -198,7 +198,7 @@ Ações fora do escopo não podem aparentar sucesso funcional.
 | Compra confirmada sem resposta da simulação | ✅ | `POST /orders` → `order.updated`/`GET` |
 | Exposição de dados entre usuários | ✅ | query keys por usuário + logout limpa tudo |
 | Eventos simulados direto na UI | ✅ | `socket.io-client` real + binding no MSW |
-| Ausência de E2E executável | ✅ | 42/42 verdes |
+| Ausência de E2E executável | ✅ | 52/52 verdes |
 
 ---
 
@@ -221,7 +221,7 @@ GitHub Pages **como último recurso** (não citado no enunciado) com os ajustes 
 
 1. `main` publicada e acessível.
 2. `npm ci && npm run build && npm run preview` funciona em checkout limpo.
-3. `npm run test:e2e` verde (42/42).
+3. `npm run test:e2e` verde (52/52).
 4. URL pública abre, navega, faz login, compra e confirma.
 5. Deep link e refresh funcionam na URL publicada.
 6. `mockServiceWorker.js` responde 200 e o socket conecta em produção.

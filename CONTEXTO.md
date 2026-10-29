@@ -15,7 +15,7 @@
 | Branch principal | `main` (2 commits) |
 | Caminho local | workspace do candidato |
 | Stack | React 19 · TypeScript 5.9 · Vite 7 · TanStack Router/Query · Axios · Tailwind 4 · shadcn/ui · MSW 2.15 · socket.io-client · Playwright · Lighthouse |
-| Estado | App completa e funcional; **42/42 testes E2E verdes** |
+| Estado | App completa e funcional; **52/52 testes E2E verdes** |
 | Pendente | Lighthouse (pausado a pedido do candidato) |
 | Prazo | entrega em **29/10/2026** |
 
@@ -194,7 +194,7 @@ Detalhes e histórico em `ARCHITECTURE.md`.
 |---|---|
 | Desktop (fluxos) | 22/22 ✅ |
 | Visual (desktop + mobile) | 8/8 ✅ |
-| **Total** | **42/42 ✅** |
+| **Total** | **52/52 ✅** |
 
 Specs: `catalog`, `detail`, `auth`, `favorites`, `cart`, `purchase`, `checkout-failures`, `realtime`, `account`, `a11y`, `loading`, `visual`.
 

@@ -46,8 +46,7 @@ export const controlHandlers = [
   ),
 
   /** Hook determinístico para testes: altera preço/estoque e emite nft.updated. */
-  http.post('/api/__mock/price-change', async ({ request }) => {
-    await bootstrap()
+  http.post('/api/__mock/price-change', async ({ request }) => {    await bootstrap()
     const body = (await request.json().catch(() => ({}))) as {
       nftId?: string
       factor?: number

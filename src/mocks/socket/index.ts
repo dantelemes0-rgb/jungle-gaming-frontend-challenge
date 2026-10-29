@@ -6,12 +6,22 @@ import { getScenario } from '../scenarios'
 import { publishRealtime, subscribeRealtime } from './bus'
 
 /**
- * Intercepta a conexÃ£o WebSocket do Socket.IO (transports: ['websocket']).
- * O binding cuida do handshake Engine.IO/Socket.IO; nÃ³s emitimos eventos de texto.
+ * Intercepta a conexão WebSocket do Socket.IO (transports: ['websocket']).
+ * O binding cuida do handshake Engine.IO/Socket.IO; nós emitimos eventos de texto.
  */
 const socketLink = ws.link('*')
 
-let scenarioArmed = false
+/**
+ * Timers do cenário pertencem à conexão ativa: com StrictMode (ou reconexão)
+ * a conexão anterior é descartada e apenas a mais recente agenda eventos.
+ */
+let scenarioTimers: number[] = []
+let activeConnection: symbol | null = null
+
+function clearScenarioTimers(): void {
+  scenarioTimers.forEach((timer) => window.clearTimeout(timer))
+  scenarioTimers = []
+}
 
 export const socketHandler = socketLink.addEventListener('connection', (connection) => {
   if (!connection.client.url.pathname.includes('/socket.io')) {
@@ -19,10 +29,13 @@ export const socketHandler = socketLink.addEventListener('connection', (connecti
     return
   }
 
-  const { client } = toSocketIo(connection)
-  const timers: number[] = []
+  const connectionId = Symbol('socket-connection')
+  activeConnection = connectionId
+  clearScenarioTimers()
 
-  // Heartbeat do Engine.IO: sem ele o cliente derruba a conexÃ£o apÃ³s ~30 s.
+  const { client } = toSocketIo(connection)
+
+  // Heartbeat do Engine.IO: sem ele o cliente derruba a conexão após ~30 s.
   const heartbeat = window.setInterval(() => {
     try {
       connection.client.send('2')
@@ -40,20 +53,17 @@ export const socketHandler = socketLink.addEventListener('connection', (connecti
     client.emit(event, payload)
   })
 
-  const scenario = getScenario()
-  // StrictMode monta duas vezes e o Socket.IO pode reconectar: agenda o cenÃ¡rio sÃ³ uma vez.
-  const shouldSchedule = !scenarioArmed
-  if (shouldSchedule) scenarioArmed = true
-
   const schedule = (delay: number, task: () => void | Promise<void>) => {
-    timers.push(
+    scenarioTimers.push(
       window.setTimeout(() => {
         void task()
       }, delay),
     )
   }
 
-  if (shouldSchedule && scenario === 'price-changed') {
+  const scenario = getScenario()
+
+  if (scenario === 'price-changed') {
     schedule(2500, async () => {
       const db = await ensureDb()
       const cartWithItems = Object.values(db.carts).find((cart) => cart.items.length > 0)
@@ -82,7 +92,7 @@ export const socketHandler = socketLink.addEventListener('connection', (connecti
     })
   }
 
-  if (shouldSchedule && scenario === 'duplicate-events') {
+  if (scenario === 'duplicate-events') {
     schedule(1200, async () => {
       const db = await ensureDb()
       const nft = db.nfts.find((item) => item.editionsAvailable > 1)
@@ -101,7 +111,7 @@ export const socketHandler = socketLink.addEventListener('connection', (connecti
     })
   }
 
-  if (shouldSchedule && scenario === 'stale-events') {
+  if (scenario === 'stale-events') {
     schedule(1000, async () => {
       const db = await ensureDb()
       const nft = db.nfts.find((item) => item.editionsAvailable > 1)
@@ -131,12 +141,12 @@ export const socketHandler = socketLink.addEventListener('connection', (connecti
     })
   }
 
-  if (shouldSchedule && scenario === 'socket-drop') {
+  if (scenario === 'socket-drop') {
     schedule(2500, () => {
       try {
         connection.client.close()
       } catch {
-        // conexÃ£o jÃ¡ encerrada
+        // conexão já encerrada
       }
     })
   }
@@ -144,6 +154,6 @@ export const socketHandler = socketLink.addEventListener('connection', (connecti
   connection.client.addEventListener('close', () => {
     unsubscribe()
     window.clearInterval(heartbeat)
-    timers.forEach((timer) => window.clearTimeout(timer))
+    if (activeConnection === connectionId) clearScenarioTimers()
   })
 })

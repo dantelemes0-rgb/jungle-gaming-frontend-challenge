@@ -205,6 +205,9 @@ Remediação planejada: pré-render das rotas públicas, MSW sob demanda pós-pa
 
 - Playwright com `webServer` apontando para o dev server e cenário determinístico por teste.
 - Cada teste limpa `localStorage` (DB, token, carrinho) e recarrega: estado isolado.
+- **52 testes** (43 desktop + 9 mobile), incluindo idempotência entre usuários,
+  socket-drop/reconexão, pedido pendente após refresh, stale-events, clique repetido,
+  registro, avatar, estoque por socket e compra no viewport mobile.
 - Cobertura: catálogo/URL, detalhe/404, sessão, favoritos (rollback), carrinho/cupom/merge, compra completa, recusa/timeout/idempotência, tempo real, perfil/carteiras, teclado/foco, loading/erro, regressão visual.
 - `trace: retain-on-failure`, vídeo e screenshot em falha; relatório HTML.
 

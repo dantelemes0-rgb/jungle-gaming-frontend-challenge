@@ -79,7 +79,7 @@ Reset: botão **“Resetar dados do cenário”** ou limpar o `localStorage` (ch
 
 ```bash
 npx playwright install chromium
-npm run test:e2e        # 42 testes (34 de fluxo + 8 visuais)
+npm run test:e2e        # 52 testes (43 desktop + 9 mobile)
 npm run test:e2e:ui
 npx playwright show-report
 ```
